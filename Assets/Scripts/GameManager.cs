@@ -20,4 +20,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Finish");
     }
+
+    public void FinishLevel()
+    {
+        Debug.Log("Nivel completado");
+    }
 }
