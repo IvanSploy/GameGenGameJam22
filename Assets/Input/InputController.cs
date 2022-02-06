@@ -25,6 +25,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Habilities"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""321a263a-4ada-4462-a3c9-e003e98940fa"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -104,6 +112,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5f73ac1-dd2c-4614-959c-ed41d63ef35a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Habilities"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -113,6 +132,7 @@ public class @InputController : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Habilities = m_Player.FindAction("Habilities", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,11 +183,13 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Habilities;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
         public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Habilities => m_Wrapper.m_Player_Habilities;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -180,6 +202,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Habilities.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
+                @Habilities.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
+                @Habilities.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -187,6 +212,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Habilities.started += instance.OnHabilities;
+                @Habilities.performed += instance.OnHabilities;
+                @Habilities.canceled += instance.OnHabilities;
             }
         }
     }
@@ -194,5 +222,6 @@ public class @InputController : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnHabilities(InputAction.CallbackContext context);
     }
 }

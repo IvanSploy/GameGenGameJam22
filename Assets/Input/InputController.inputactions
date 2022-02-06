@@ -12,6 +12,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Habilities",
+                    "type": "PassThrough",
+                    "id": "321a263a-4ada-4462-a3c9-e003e98940fa",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -91,6 +99,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b5f73ac1-dd2c-4614-959c-ed41d63ef35a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Habilities",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

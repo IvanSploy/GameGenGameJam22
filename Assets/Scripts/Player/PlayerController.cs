@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
@@ -19,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private InputController input;
     private Rigidbody2D _rigidbody2D;
+    private Keyboard space;
 
     //Propiedades
     public int speed = 5;
@@ -41,14 +45,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(_rigidbody2D.velocity);
         anim.SetFloat("speed", speed);
     }
 
     private void Update()
     {
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
-        Debug.Log(dir);
         if ((Vector2) transform.position == targetPosition)
         {
             anim.SetFloat("speed", 0);
@@ -57,7 +59,13 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetFloat("speed", speed + 1);
         }
-
+        
+        if (input.Player.Habilities.ReadValue<float>() > 0.1f && (Vector2) transform.position == targetPosition)
+        {
+            Teleport();
+            return;
+        }
+        
         if (dir != Vector2.zero && (Vector2) transform.position == targetPosition)
         {
             anim.SetFloat("speed", 0);
@@ -99,11 +107,54 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
-
+    private void Teleport()
+    {
+        Vector2 dir = Vector2.zero;
+        switch (direction)
+        {
+            case Direction.right:
+                dir = Vector2.right;
+                break;
+            case Direction.left:
+                dir = Vector2.left;
+                break;
+            case Direction.up:
+                dir = Vector2.up;
+                break;
+            case Direction.down:
+                dir = Vector2.down;
+                break;
+        }
+        int i = 1;
+        RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        while (!result.collider)
+        {
+            i++;
+            result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        }
+        Debug.Log(result.collider);
+        Vector2 aux = transform.position;
+        switch (direction)
+        {
+            case Direction.right:
+                aux += new Vector2(i - 1, 0);
+                break;
+            case Direction.left:
+                aux += new Vector2(-i + 1, 0);
+                break;
+            case Direction.up:
+                aux += new Vector2(0, i - 1);
+                break;
+            case Direction.down:
+                aux += new Vector2(0, -i + 1);
+                break;
+        }
+        targetPosition = aux;
+        transform.position = targetPosition;
+    }
     private bool CanMove
     {
         get
