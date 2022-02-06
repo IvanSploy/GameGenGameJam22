@@ -30,7 +30,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""name"": ""Habilities"",
                     ""type"": ""PassThrough"",
                     ""id"": ""321a263a-4ada-4462-a3c9-e003e98940fa"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -38,7 +38,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""name"": ""ChangeHability"",
                     ""type"": ""PassThrough"",
                     ""id"": ""0b51b27a-a8b2-46c9-813f-37ab2afe01af"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }

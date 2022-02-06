@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour
         targetPosition = transform.position;
     }
 
+    private void Start()
+    {
+        input.Player.Habilities.performed += (ctx) => ManageHabilities();
+    }
+
     private void FixedUpdate()
     {
         anim.SetFloat("speed", speed);
@@ -71,12 +76,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             indexHabilities = (indexHabilities + 1) % habilities.Length;
-            Debug.Log(indexHabilities);
-        }
-        
-        if (input.Player.Habilities.ReadValue<float>() > 0.1f)
-        {
-            ManageHabilities(indexHabilities);
         }
         ////////////////////////
         
@@ -189,10 +188,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ManageHabilities(int numberHability)
+    private void ManageHabilities()
     {
-        Debug.Log("Habilidad: " + numberHability);
-        switch (numberHability)
+        Debug.Log("Habilidad: " + indexHabilities);
+        switch (indexHabilities)
         {
             case 0:
                 if ((Vector2) transform.position == targetPosition) Teleport();
