@@ -11,7 +11,9 @@ public class Battery : MonoBehaviour
     private Slider slider;
     private int sleepTime;
     private int maxSeconds;
+    [SerializeField] private Animator animator;
     private TextMeshProUGUI TMP;
+    [SerializeField] private Image _image;
     void Start()
     {
         maxSeconds = (int) seconds;
@@ -38,6 +40,7 @@ public class Battery : MonoBehaviour
     IEnumerator DecrementTime()
     {
         TMP.text = "" + (int)((seconds / maxSeconds) * 100) + "%";
+        animator.SetInteger("BatteryLevel", (int) ((seconds / maxSeconds) * 100));
         //slider.value -= Time.deltaTime;
         seconds -= Time.deltaTime;
         yield return new WaitForEndOfFrame();
