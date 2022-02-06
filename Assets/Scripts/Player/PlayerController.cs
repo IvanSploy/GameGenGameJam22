@@ -30,9 +30,15 @@ public class PlayerController : MonoBehaviour
     public Vector2 targetPosition;
     public LayerMask obstacles;
 
+    //Habilites
+    public int[] habilities = {0, 1, 2};
+    private int indexHabilities;
+    private Weapon _weapon;
     private void Awake()
     {
+        indexHabilities = 0;
         anim = GetComponentInChildren<Animator>();
+        _weapon = GetComponentInChildren<Weapon>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         direction = Direction.down;
         input = new InputController();
@@ -60,11 +66,19 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("speed", speed + 1);
         }
         
-        if (input.Player.Habilities.ReadValue<float>() > 0.1f && (Vector2) transform.position == targetPosition)
+        
+        //INICIO DE HABILIDADES
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Teleport();
-            return;
+            indexHabilities = (indexHabilities + 1) % habilities.Length;
+            Debug.Log(indexHabilities);
         }
+        
+        if (input.Player.Habilities.ReadValue<float>() > 0.1f)
+        {
+            ManageHabilities(indexHabilities);
+        }
+        ////////////////////////
         
         if (dir != Vector2.zero && (Vector2) transform.position == targetPosition)
         {
@@ -154,6 +168,42 @@ public class PlayerController : MonoBehaviour
         }
         targetPosition = aux;
         transform.position = targetPosition;
+    }
+
+    private void Shoot()
+    {
+        switch (direction)
+        {
+            case Direction.right:
+                _weapon.fire(1, 0);
+                break;
+            case Direction.left:
+                _weapon.fire(-1, 0);
+                break;
+            case Direction.up:
+                _weapon.fire(0, 1);
+                break;
+            case Direction.down:
+                _weapon.fire(0, -1);
+                break;
+        }
+    }
+
+    private void ManageHabilities(int numberHability)
+    {
+        Debug.Log("Habilidad: " + numberHability);
+        switch (numberHability)
+        {
+            case 0:
+                if ((Vector2) transform.position == targetPosition) Teleport();
+                break;
+            case 1:
+                Shoot();
+                break;
+            case 2:
+                
+                break;
+        }
     }
     private bool CanMove
     {

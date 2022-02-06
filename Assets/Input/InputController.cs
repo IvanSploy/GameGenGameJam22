@@ -33,6 +33,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ChangeHability"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0b51b27a-a8b2-46c9-813f-37ab2afe01af"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -123,6 +131,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""Habilities"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8120438f-877b-473a-aa34-b0f027f96fde"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeHability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -133,6 +152,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Habilities = m_Player.FindAction("Habilities", throwIfNotFound: true);
+        m_Player_ChangeHability = m_Player.FindAction("ChangeHability", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -184,12 +204,14 @@ public class @InputController : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Habilities;
+    private readonly InputAction m_Player_ChangeHability;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
         public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Habilities => m_Wrapper.m_Player_Habilities;
+        public InputAction @ChangeHability => m_Wrapper.m_Player_ChangeHability;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -205,6 +227,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Habilities.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
                 @Habilities.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
                 @Habilities.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
+                @ChangeHability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
+                @ChangeHability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
+                @ChangeHability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -215,6 +240,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Habilities.started += instance.OnHabilities;
                 @Habilities.performed += instance.OnHabilities;
                 @Habilities.canceled += instance.OnHabilities;
+                @ChangeHability.started += instance.OnChangeHability;
+                @ChangeHability.performed += instance.OnChangeHability;
+                @ChangeHability.canceled += instance.OnChangeHability;
             }
         }
     }
@@ -223,5 +251,6 @@ public class @InputController : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnHabilities(InputAction.CallbackContext context);
+        void OnChangeHability(InputAction.CallbackContext context);
     }
 }

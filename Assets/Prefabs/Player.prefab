@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8390120307743241251}
   - component: {fileID: 8390120307743241277}
   - component: {fileID: 8390120307743241248}
+  - component: {fileID: 2152462235626531371}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,6 +78,21 @@ MonoBehaviour:
   obstacles:
     serializedVersion: 2
     m_Bits: 8
+  habilities: 000000000100000002000000
+--- !u!114 &2152462235626531371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390120307743241279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5780142f982c71b4797c54b8455aa177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 7719880816401799710, guid: 0c524a3c6ac7a5741bc4ce8472285f98, type: 3}
+  fireRate: 2
 --- !u!1 &8390120308616561771
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8390120308616561768}
   - component: {fileID: 8390120308616561769}
+  - component: {fileID: 7026214223688605109}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -159,3 +176,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7026214223688605109
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390120308616561771}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: afd67d87aa06a9c47a77cab3b346bfe4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,32 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private float fireRate= 0.5f;
-    [SerializeField] private float nextFire = 0.0f;
+    private float nextFire = 0.0f;
+    private bool canShoot;
+    private GameObject _bullet;
+
+    private void Awake()
+    {
+        canShoot = true;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire)
+        if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            fire();
+            canShoot = true;
         }
     }
 
-    private void fire()
+    public void fire(float velX, float velY)
     {
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        if (canShoot)
+        {
+            _bullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            _bullet.GetComponent<Bullet>().SetVel(velX, velY);
+            _bullet.GetComponent<SpriteRenderer>().enabled = true;
+            canShoot = false;            
+        }
     }
 }
