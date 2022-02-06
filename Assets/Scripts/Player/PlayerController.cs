@@ -90,12 +90,12 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Input
-    private void OnEnable()
+    public void OnEnable()
     {
         input.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         input.Disable();
     }
