@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private InputController input;
     private Rigidbody2D _rigidbody2D;
+    private Light _lantern;
+    private Light _miniLight;
 
     //Propiedades
     public int speed = 5;
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private int m_indexHabilities;
 
     //Estado
-    private bool playerCanControl = true;
+    public bool playerCanControl = true;
     public bool isDashing = false;
 
     public int IndexHabilities
@@ -61,6 +63,12 @@ public class PlayerController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         _weapon = GetComponentInChildren<Weapon>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        if (!_lantern || !_miniLight)
+        {
+            Light[] lights = GetComponentsInChildren<Light>();
+            _lantern = lights[0];
+            _miniLight = lights[1];
+        }
         direction = Direction.down;
         input = new InputController();
         transform.position = GameManager.CenterVector(transform.position);
@@ -75,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
         //Activar pasivas.
         CheckPasives();
+        //Activar habilidad automatica.
+        StartHability();
     }
 
     private void FixedUpdate()
@@ -329,6 +339,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SetLight(bool active)
+    {
+        _lantern.enabled = active;
+        _miniLight.enabled = !active;
+    }
+
     //Call this methods when User choose this Hability
     private void MoreSpeed(int inc)
     {
@@ -359,6 +375,21 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
+        }
+    }
+
+    private void StartHability()
+    {
+        switch (habilities[0])
+        {
+            case 4:
+
+                break;
+            case 5:
+                SetLight(true);
+                break;
+            default:
+                break;
         }
     }
 
@@ -394,14 +425,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnNextHability(int initialHability)
     {
-        IndexHabilities++;
-        //Para evitar recursión infinita.
-        if (IndexHabilities == initialHability) return;
+        //Desactivar activas automáticas.
         switch (habilities[IndexHabilities])
         {
-            //Aqu� se indican las habilidades pasivas.
+            case 4:
+
+                break;
+            case 5:
+                SetLight(false);
+                break;
+        }
+        IndexHabilities++;
+        //Para evitar recursión infinita. Si todas son pasivas.
+        if (IndexHabilities == initialHability) return;
+
+        //Aquí se indican las habilidades pasivas.
+        //También se activan las activas automáticas.
+        switch (habilities[IndexHabilities])
+        {
             case 4:
             case 5:
+                SetLight(true);
+                break;
             case 6:
             case 7:
             case 8:
