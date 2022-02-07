@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     //Habilites
     public int[] habilities = {0, 1, 2};
     private int m_indexHabilities;
+    public bool isDashing;
     public int IndexHabilities
     {
         get
@@ -222,7 +223,7 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
-		if ((Vector2) transform.position != targetPosition) return;
+        isDashing = true;
         Vector2 dir = Vector2.zero;
         switch (direction)
         {
@@ -264,7 +265,13 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         targetPosition = aux;
-        this.transform.DOMove(targetPosition, 0.5f);
+        this.transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
+    }
+
+    private void DashFinish()
+    {
+        CenterPlayer();
+        isDashing = false;
     }
 
     private void Shoot()
@@ -291,7 +298,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Habilidad: " + IndexHabilities);
         switch (habilities[IndexHabilities])
         {
-            //Aquí aparecen las habilidades activas.
+            //Aquï¿½ aparecen las habilidades activas.
             case 0:
                 Teleport();
                 break;
@@ -311,7 +318,7 @@ public class PlayerController : MonoBehaviour
         IndexHabilities++;
         switch (habilities[IndexHabilities])
         {
-            //Aquí se indican las habilidades pasivas.
+            //Aquï¿½ se indican las habilidades pasivas.
             case 3:
                 OnNextHability();
                 break;
