@@ -51,6 +51,11 @@ public class ChangeLevels : MonoBehaviour
             levels[i].interactable = true;
         }
     }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     private void BackToMenu()
     {
         changeLevel(0);

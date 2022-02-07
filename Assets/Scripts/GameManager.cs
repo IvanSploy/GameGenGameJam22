@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Scene = UnityEditor.SearchService.Scene;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +27,27 @@ public class GameManager : MonoBehaviour
     public void FinishLevel()
     {
         Debug.Log("Nivel completado");
+    }
+
+    public void Play()
+    {
+        SceneManager.LoadScene("LevelSelector");
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit");
+        Application.Quit();
     }
 
     //Metodos estaticos

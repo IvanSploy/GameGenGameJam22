@@ -34,6 +34,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/SceneManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/PruebaLevel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveGame.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ChangeLevels.cs" />
     </changedPaths>
   </component>
@@ -99,6 +100,7 @@
       <workItem from="1644093917022" duration="1174000" />
       <workItem from="1644152362437" duration="6302000" />
       <workItem from="1644257620041" duration="6297000" />
+      <workItem from="1644267768671" duration="1223000" />
     </task>
     <servers />
   </component>
