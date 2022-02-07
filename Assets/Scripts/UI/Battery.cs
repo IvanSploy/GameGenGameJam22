@@ -11,7 +11,9 @@ public class Battery : MonoBehaviour
     private Slider slider;
     private int sleepTime;
     private int maxSeconds;
+    private bool isSelected = false;
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator moreTime;
     private TextMeshProUGUI TMP;
     [SerializeField] private Image _image;
     void Start()
@@ -35,6 +37,8 @@ public class Battery : MonoBehaviour
     {
         yield return new WaitForSeconds(sleepTime);
         StartCoroutine(DecrementTime());
+        if (isSelected)
+            passiveMoreTime();
     }
 
     IEnumerator DecrementTime()
@@ -52,5 +56,18 @@ public class Battery : MonoBehaviour
         {
             StartCoroutine((DecrementTime()));
         }
+    }
+    
+    //Call this method when User select Time Hability
+    public void selectPassive()
+    {
+        isSelected = true;
+    }
+    
+    private void passiveMoreTime()
+    {
+        seconds += 20;
+        animator = moreTime;
+        animator.Play("MoreBattery");
     }
 }
