@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
     private void ManageHabilities()
     {
         Debug.Log("Habilidad: " + IndexHabilities);
-        switch (IndexHabilities)
+        switch (habilities[IndexHabilities])
         {
             //Aquí aparecen las habilidades activas.
             case 0:
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
     private void OnNextHability()
     {
         IndexHabilities++;
-        switch (IndexHabilities)
+        switch (habilities[IndexHabilities])
         {
             //Aquí se indican las habilidades pasivas.
             case 3:
