@@ -348,6 +348,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Call this method when User choose this Hability
+    private void moreSpeed(int inc)
+    {
+        speed += inc;
+    }
+
     #region Input
 
     public void OnEnable()
