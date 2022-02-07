@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.ChangeHability.started += (ctx) => OnNextHability();
+        DOTween.Init();
     }
 
     private void FixedUpdate()
@@ -206,6 +208,53 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
+    private void Dash()
+    {
+		if ((Vector2) transform.position != targetPosition) return;
+        Vector2 dir = Vector2.zero;
+        switch (direction)
+        {
+            case Direction.right:
+                dir = Vector2.right;
+                break;
+            case Direction.left:
+                dir = Vector2.left;
+                break;
+            case Direction.up:
+                dir = Vector2.up;
+                break;
+            case Direction.down:
+                dir = Vector2.down;
+                break;
+        }
+        int i = 1;
+        RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        while (!result.collider && i <=4)
+        {
+            i++;
+            result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        }
+        Debug.Log(result.collider);
+        Vector2 aux = transform.position;
+        switch (direction)
+        {
+            case Direction.right:
+                aux += new Vector2(i - 1, 0);
+                break;
+            case Direction.left:
+                aux += new Vector2(-i + 1, 0);
+                break;
+            case Direction.up:
+                aux += new Vector2(0, i - 1);
+                break;
+            case Direction.down:
+                aux += new Vector2(0, -i + 1);
+                break;
+        }
+        targetPosition = aux;
+        this.transform.DOMove(targetPosition, 0.5f);
+    }
 
     private void Shoot()
     {
@@ -238,6 +287,8 @@ public class PlayerController : MonoBehaviour
             case 1:
                 Shoot();
                 break;
+			case 2:
+				Dash();
             default:
                 break;
         }
@@ -249,7 +300,7 @@ public class PlayerController : MonoBehaviour
         switch (IndexHabilities)
         {
             //Aquí se indican las habilidades pasivas.
-            case 2:
+            case 3:
                 OnNextHability();
                 break;
             default:
