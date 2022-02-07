@@ -72,8 +72,8 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0, g: 1, b: 0.3953898, a: 1}
-  m_Intensity: 8.8
+  m_Color: {r: 0.82452834, g: 1, b: 0.8602004, a: 1}
+  m_Intensity: 5.89
   m_Range: 13.3
   m_SpotAngle: 80.83
   m_InnerSpotAngle: 4
@@ -217,6 +217,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  playerCanControl: 1
   isDashing: 0
 --- !u!114 &2152462235626531371
 MonoBehaviour:
