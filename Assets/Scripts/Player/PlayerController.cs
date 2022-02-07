@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     //Habilites
     public int[] habilities = {0, 1, 2};
     private int m_indexHabilities;
+    public bool isDashing;
     public int IndexHabilities
     {
         get
@@ -212,6 +213,7 @@ public class PlayerController : MonoBehaviour
     
     private void Dash()
     {
+        isDashing = true;
         Vector2 dir = Vector2.zero;
         switch (direction)
         {
@@ -253,7 +255,13 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         targetPosition = aux;
-        this.transform.DOMove(targetPosition, 0.5f).OnComplete(CenterPlayer);
+        this.transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
+    }
+
+    private void DashFinish()
+    {
+        CenterPlayer();
+        isDashing = false;
     }
 
     private void Shoot()
