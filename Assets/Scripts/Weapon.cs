@@ -25,14 +25,17 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void fire(float velX, float velY)
+    public bool fire(float velX, float velY)
     {
         if (canShoot)
         {
             _bullet = Instantiate(bullet, transform.position, Quaternion.identity);
             _bullet.GetComponent<Bullet>().SetVel(velX, velY);
             _bullet.GetComponent<SpriteRenderer>().enabled = true;
-            canShoot = false;            
+            canShoot = false;
+            return true;
         }
+
+        return false;
     }
 }
