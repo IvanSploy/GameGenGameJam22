@@ -25,6 +25,12 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other);
+        if (other.tag == "Enemy")
+        {
+            other.GetComponent<Enemy>().timeParalized = 3f;
+            Destroy(this.gameObject);
+        }
+
         if (other.tag == "Muro")
             Destroy(this.gameObject);
     }
