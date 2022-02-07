@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2298081399925620499}
   - component: {fileID: 1087038629078909662}
   - component: {fileID: 2298081399925620497}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy Random
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,8 +100,12 @@ MonoBehaviour:
   speed: 5
   targetPosition: {x: 0, y: 0}
   obstacles:
-    serializedVersion: 2
+  - serializedVersion: 2
     m_Bits: 8
+  - serializedVersion: 2
+    m_Bits: 64
+  changeAfterMoves: 0
+  moves: 3
 --- !u!61 &2298081399925620497
 BoxCollider2D:
   m_ObjectHideFlags: 0

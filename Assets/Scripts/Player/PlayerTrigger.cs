@@ -8,13 +8,13 @@ public class PlayerTrigger : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            Debug.Log("Me mato");
             OnEnemy();
         }
     }
 
     public void OnEnemy()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        Debug.Log("Morí");
     }
 }

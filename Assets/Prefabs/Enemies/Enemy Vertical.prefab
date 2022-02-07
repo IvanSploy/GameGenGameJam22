@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8346372206651860992}
   - component: {fileID: 8346372206651861023}
   - component: {fileID: 8346372206651860994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy Vertical
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,8 +100,12 @@ MonoBehaviour:
   speed: 5
   targetPosition: {x: 0, y: 0}
   obstacles:
-    serializedVersion: 2
+  - serializedVersion: 2
     m_Bits: 8
+  - serializedVersion: 2
+    m_Bits: 64
+  changeAfterMoves: 0
+  moves: 3
 --- !u!61 &8346372206651860994
 BoxCollider2D:
   m_ObjectHideFlags: 0

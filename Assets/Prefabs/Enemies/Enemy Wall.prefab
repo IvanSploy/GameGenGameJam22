@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6784500828557455495}
   - component: {fileID: 2420586379661536331}
   - component: {fileID: 6784500828557455493}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy Wall
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,8 +100,12 @@ MonoBehaviour:
   speed: 5
   targetPosition: {x: 0, y: 0}
   obstacles:
-    serializedVersion: 2
+  - serializedVersion: 2
     m_Bits: 8
+  - serializedVersion: 2
+    m_Bits: 64
+  changeAfterMoves: 0
+  moves: 3
   clockWise: 1
 --- !u!61 &6784500828557455493
 BoxCollider2D:

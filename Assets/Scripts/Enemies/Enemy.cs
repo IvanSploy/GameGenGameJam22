@@ -16,7 +16,7 @@ public abstract class Enemy : MonoBehaviour
     public int speed = 5;
     [HideInInspector]
     public Vector2 targetPosition;
-    public LayerMask obstacles;
+    public LayerMask[] obstacles;
     public bool changeAfterMoves = false;
     public int moves = 3;
 
@@ -122,8 +122,12 @@ public abstract class Enemy : MonoBehaviour
                     dir = Vector2.down;
                     break;
             }
-
-            RaycastHit2D result = Physics2D.Raycast(transform.position, dir, 1, obstacles);
+            int layer = 0;
+            for (int i = 0; i < obstacles.Length; i++)
+            {
+                layer |= obstacles[i].value;
+            }
+            RaycastHit2D result = Physics2D.Raycast(transform.position, dir, 1, layer);
             if (result.collider)
             {
                 CalculateDirection();

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     //Habilites
     public int[] habilities = {0, 1, 2};
+    public float[] cooldowns = {0, 0, 0};
     private int m_indexHabilities;
     public int IndexHabilities
     {
@@ -190,7 +191,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log(result.collider);
             Vector2 aux = transform.position;
             switch (direction)
             {
