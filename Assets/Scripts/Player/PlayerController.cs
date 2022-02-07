@@ -10,24 +10,18 @@ using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
     //Enums
-    public enum Direction
-    {
-        up,
-        down,
-        left,
-        right
-    }
+    public enum Direction { up, down, left, right }
 
     //Referencias
     private Animator anim;
     private InputController input;
     private Rigidbody2D _rigidbody2D;
-    private Keyboard space;
 
     //Propiedades
     public int speed = 5;
     private bool isTeleporting = false;
     public Direction direction;
+    [HideInInspector]
     public Vector2 targetPosition;
     public LayerMask obstacles;
 
