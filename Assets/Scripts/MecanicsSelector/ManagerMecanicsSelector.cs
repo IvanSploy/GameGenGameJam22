@@ -10,7 +10,7 @@ public class ManagerMecanicsSelector : MonoBehaviour
     [SerializeField] private GameObject [] _buttonsHabilities = new GameObject[3];
     [SerializeField] private Image [] _habilitiesSelected = new Image[3];
     [SerializeField] private GameObject _goBackSelector;
-    [SerializeField] private GameManager _goPlayLevel;
+    [SerializeField] private GameObject _goPlayLevel;
 
     [SerializeField] private Sprite[] _imagesHabilitiesSelected = new Sprite[10];
     [SerializeField] private Sprite[] _imagesHabilitiesButtons = new Sprite[9];

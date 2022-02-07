@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="441ba163-0d38-4b9e-9a28-68c1f5178e4a" name="Default Changelist" comment="" />
+    <list default="true" id="441ba163-0d38-4b9e-9a28-68c1f5178e4a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cards.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,14 +26,19 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Battery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/PersistanceData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../GlobalGameJam22/Assets/Scripts/Player/PlayerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../GlobalGameJam22/Assets/Scripts/Sheep/SheepBehavior.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../GlobalGameJam22/Assets/Scripts/PickUpObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Keys.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../GlobalGameJam22/Assets/Scripts/Player/PlayerManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Input/InputController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FinishLevel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Battery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Input/InputController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Keys.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -35,6 +47,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/PruebaLevel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ChangeLevels.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="24hrwlmJ6wLjSplDvYv6TFhwO95" />
