@@ -162,6 +162,14 @@ public class PlayerController : MonoBehaviour
         targetPosition = new Vector3(x, y, z);
     }
 
+    public Vector3 CenterVector(Vector3 pos)
+    {
+        float x = (int)(pos.x) + Mathf.Sign(pos.x) * 0.5f;
+        float y = (int)(pos.y) + Mathf.Sign(pos.y) * 0.5f;
+        float z = transform.position.z;
+        return new Vector3(x, y, z);
+    }
+
     #region Habilities
 
     private void Teleport()
@@ -235,7 +243,6 @@ public class PlayerController : MonoBehaviour
     {
         playerCanControl = false;
         isDashing = true;
-        if ((Vector2) transform.position != targetPosition) return;
         anim.SetTrigger("dash");
 
         Vector2 dir = Vector2.zero;
@@ -280,9 +287,9 @@ public class PlayerController : MonoBehaviour
                 aux += new Vector2(0, -i + 1);
                 break;
         }
-
+        aux = CenterVector(aux);
         targetPosition = aux;
-        this.transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
+        transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
     }
 
     private void DashFinish()
