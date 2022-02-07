@@ -289,6 +289,7 @@ public class PlayerController : MonoBehaviour
                 break;
 			case 2:
 				Dash();
+                break;
             default:
                 break;
         }
