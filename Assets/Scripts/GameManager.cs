@@ -25,4 +25,13 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Nivel completado");
     }
+
+    //Metodos estaticos
+    public static Vector3 CenterVector(Vector3 pos)
+    {
+        float x = (int)(pos.x) + Mathf.Sign(pos.x) * 0.5f;
+        float y = (int)(pos.y) + Mathf.Sign(pos.y) * 0.5f;
+        float z = pos.z;
+        return new Vector3(x, y, z);
+    }
 }

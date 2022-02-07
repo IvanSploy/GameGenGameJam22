@@ -60,7 +60,8 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         direction = Direction.down;
         input = new InputController();
-        CenterPlayer();
+        transform.position = GameManager.CenterVector(transform.position);
+        targetPosition = transform.position;
     }
 
     private void Start()
@@ -150,24 +151,6 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-    }
-
-    public void CenterPlayer()
-    {
-        float x = (int) (transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
-        float y = (int) (transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
-        float z = transform.position.z;
-        //transform.position = new Vector3(x, y, z);
-        //targetPosition = transform.position;
-        targetPosition = new Vector3(x, y, z);
-    }
-
-    public Vector3 CenterVector(Vector3 pos)
-    {
-        float x = (int)(pos.x) + Mathf.Sign(pos.x) * 0.5f;
-        float y = (int)(pos.y) + Mathf.Sign(pos.y) * 0.5f;
-        float z = transform.position.z;
-        return new Vector3(x, y, z);
     }
 
     #region Habilities
@@ -287,14 +270,13 @@ public class PlayerController : MonoBehaviour
                 aux += new Vector2(0, -i + 1);
                 break;
         }
-        aux = CenterVector(aux);
+        aux = GameManager.CenterVector(aux);
         targetPosition = aux;
         transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
     }
 
     private void DashFinish()
     {
-        CenterPlayer();
         playerCanControl = true;
         isDashing = false;
     }
@@ -316,6 +298,12 @@ public class PlayerController : MonoBehaviour
                 if (_weapon.fire(0, -1)) anim.SetTrigger("shoot");
                 break;
         }
+    }
+
+    //Call this method when User choose this Hability
+    private void MoreSpeed(int inc)
+    {
+        speed += inc;
     }
 
     private void ManageHabilities()
@@ -381,10 +369,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Call this method when User choose this Hability
-    private void moreSpeed(int inc)
+    //Metodos utiles.
+    public Vector3 VectorFromDirection()
     {
-        speed += inc;
+        Vector2 dir = Vector2.zero;
+        switch (direction)
+        {
+            case Direction.right:
+                dir = Vector2.right;
+                break;
+            case Direction.left:
+                dir = Vector2.left;
+                break;
+            case Direction.up:
+                dir = Vector2.up;
+                break;
+            case Direction.down:
+                dir = Vector2.down;
+                break;
+        }
+        return dir;
     }
 
     #region Input

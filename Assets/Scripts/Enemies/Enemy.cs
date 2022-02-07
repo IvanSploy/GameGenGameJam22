@@ -26,7 +26,8 @@ public abstract class Enemy : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        Center();
+        transform.position = GameManager.CenterVector(transform.position);
+        targetPosition = transform.position;
     }
 
     private void Update()
@@ -72,15 +73,6 @@ public abstract class Enemy : MonoBehaviour
             }
         }
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-    }
-
-    public void Center()
-    {
-        float x = (int)(transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
-        float y = (int)(transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
-        float z = transform.position.z;
-        transform.position = new Vector3(x, y, z);
-        targetPosition = transform.position;
     }
 
     public void ChangeDirection(Direction dir)
