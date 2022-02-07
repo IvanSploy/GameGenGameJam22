@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
-using static UnityEngine.InputSystem.InputAction;
 using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     //Propiedades
     public int speed = 5;
+    private bool canMove = true;
     public Direction direction;
     public Vector2 targetPosition;
     public LayerMask obstacles;
@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!canMove) return;
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
         if (dir == Vector2.zero && (Vector2) transform.position == targetPosition)
         {
@@ -150,65 +151,75 @@ public class PlayerController : MonoBehaviour
         float x = (int)(transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
         float y = (int)(transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
         float z = transform.position.z;
-        transform.position = new Vector3(x, y, z);
+        //transform.position = new Vector3(x, y, z);
+        //targetPosition = transform.position;
+        targetPosition = new Vector3(x, y, z);
     }
 
+    #region Habilities
     private void Teleport()
     {
-        if ((Vector2)transform.position == targetPosition)
+        if ((Vector2)transform.position != targetPosition) return;
+        StartCoroutine(DoTeleport());
+    }
+
+    IEnumerator DoTeleport()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        Vector2 dir = Vector2.zero;
+        switch (direction)
         {
-            Vector2 dir = Vector2.zero;
+            case Direction.right:
+                dir = Vector2.right;
+                break;
+            case Direction.left:
+                dir = Vector2.left;
+                break;
+            case Direction.up:
+                dir = Vector2.up;
+                break;
+            case Direction.down:
+                dir = Vector2.down;
+                break;
+        }
+        int i = 1;
+        RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        while (!result.collider && i <= 1000)
+        {
+            i++;
+            result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        }
+        if (i > 1000)
+        {
+            Debug.LogWarning("Teleport fallido, demasiadas iteraciones.");
+        }
+        else
+        {
+            Debug.Log(result.collider);
+            Vector2 aux = transform.position;
             switch (direction)
             {
                 case Direction.right:
-                    dir = Vector2.right;
+                    aux += new Vector2(i - 1, 0);
                     break;
                 case Direction.left:
-                    dir = Vector2.left;
+                    aux += new Vector2(-i + 1, 0);
                     break;
                 case Direction.up:
-                    dir = Vector2.up;
+                    aux += new Vector2(0, i - 1);
                     break;
                 case Direction.down:
-                    dir = Vector2.down;
+                    aux += new Vector2(0, -i + 1);
                     break;
             }
-            int i = 1;
-            RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
-            while (!result.collider && i <= 1000)
-            {
-                i++;
-                result = Physics2D.Raycast(transform.position, dir, i, obstacles);
-            }
-            if (i > 1000)
-            {
-                Debug.LogWarning("Teleport fallido, demasiadas iteraciones.");
-            }
-            else
-            {
-                Debug.Log(result.collider);
-                Vector2 aux = transform.position;
-                switch (direction)
-                {
-                    case Direction.right:
-                        aux += new Vector2(i - 1, 0);
-                        break;
-                    case Direction.left:
-                        aux += new Vector2(-i + 1, 0);
-                        break;
-                    case Direction.up:
-                        aux += new Vector2(0, i - 1);
-                        break;
-                    case Direction.down:
-                        aux += new Vector2(0, -i + 1);
-                        break;
-                }
-                targetPosition = aux;
-                transform.position = targetPosition;
-            }
+            targetPosition = aux;
+            transform.position = targetPosition;
         }
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        canMove = true;
     }
-    
+
     private void Dash()
     {
 		if ((Vector2) transform.position != targetPosition) return;
@@ -308,6 +319,8 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    #endregion
 
     private bool CanMove
     {
