@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        DOTween.Init();
         input.Player.Habilities.performed += (ctx) => ManageHabilities();
     }
 
@@ -168,6 +170,52 @@ public class PlayerController : MonoBehaviour
         targetPosition = aux;
         transform.position = targetPosition;
     }
+    
+    private void Dash()
+    {
+        Vector2 dir = Vector2.zero;
+        switch (direction)
+        {
+            case Direction.right:
+                dir = Vector2.right;
+                break;
+            case Direction.left:
+                dir = Vector2.left;
+                break;
+            case Direction.up:
+                dir = Vector2.up;
+                break;
+            case Direction.down:
+                dir = Vector2.down;
+                break;
+        }
+        int i = 1;
+        RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        while (!result.collider && i <=4)
+        {
+            i++;
+            result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+        }
+        Debug.Log(result.collider);
+        Vector2 aux = transform.position;
+        switch (direction)
+        {
+            case Direction.right:
+                aux += new Vector2(i - 1, 0);
+                break;
+            case Direction.left:
+                aux += new Vector2(-i + 1, 0);
+                break;
+            case Direction.up:
+                aux += new Vector2(0, i - 1);
+                break;
+            case Direction.down:
+                aux += new Vector2(0, -i + 1);
+                break;
+        }
+        targetPosition = aux;
+        this.transform.DOMove(targetPosition, 0.5f);
+    }
 
     private void Shoot()
     {
@@ -200,7 +248,7 @@ public class PlayerController : MonoBehaviour
                 Shoot();
                 break;
             case 2:
-                
+                if ((Vector2) transform.position == targetPosition) Dash();
                 break;
         }
     }
