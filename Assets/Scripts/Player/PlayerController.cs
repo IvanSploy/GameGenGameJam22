@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     //Propiedades
     public int speed = 5;
-    private bool canMove = true;
+    private bool isTeleporting = false;
     public Direction direction;
     public Vector2 targetPosition;
     public LayerMask obstacles;
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!canMove) return;
+        if (isTeleporting) return;
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
         if (dir == Vector2.zero && (Vector2) transform.position == targetPosition)
         {
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DoTeleport()
     {
-        canMove = false;
+        isTeleporting = true;
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         Vector2 dir = Vector2.zero;
         switch (direction)
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
             transform.position = targetPosition;
         }
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        canMove = true;
+        isTeleporting = false;
     }
 
     private void Dash()
