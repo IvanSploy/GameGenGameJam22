@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
     //Propiedades
     public int speed = 5;
-    private bool isTeleporting = false;
     public Direction direction;
     [HideInInspector]
     public Vector2 targetPosition;
@@ -30,7 +29,9 @@ public class PlayerController : MonoBehaviour
     public float[] cooldowns = {0, 0, 0};
     private int m_indexHabilities;
 
-    public bool isDashing;
+    //Estado
+    private bool playerCanControl = true;
+    public bool isDashing = false;
 
     public int IndexHabilities
     {
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isTeleporting) return;
+        if (!playerCanControl) return;
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
         if (dir == Vector2.zero && (Vector2) transform.position == targetPosition)
         {
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DoTeleport()
     {
-        isTeleporting = true;
+        playerCanControl = false;
         anim.SetTrigger("teleport");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         Vector2 dir = Vector2.zero;
@@ -227,11 +228,12 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetTrigger("teleport");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        isTeleporting = false;
+        playerCanControl = true;
     }
 
     private void Dash()
     {
+        playerCanControl = false;
         isDashing = true;
         if ((Vector2) transform.position != targetPosition) return;
         anim.SetTrigger("dash");
@@ -286,6 +288,7 @@ public class PlayerController : MonoBehaviour
     private void DashFinish()
     {
         CenterPlayer();
+        playerCanControl = true;
         isDashing = false;
     }
 
@@ -310,6 +313,7 @@ public class PlayerController : MonoBehaviour
 
     private void ManageHabilities()
     {
+        if (!playerCanControl) return;
         Debug.Log("Habilidad: " + IndexHabilities);
         switch (habilities[IndexHabilities])
         {
