@@ -9,7 +9,8 @@ public class Lave : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Has muerto");
+            if (!other.GetComponent<PlayerController>().isDashing)
+                Debug.Log("Has muerto");
         }
     }
 }
