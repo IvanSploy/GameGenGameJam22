@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
 
     //Habilites
     public int[] habilities = {0, 1, 2};
-    public float[] cooldowns = {0, 0, 0};
+    public float[] totalCooldowns = new float[9];
+    private float[] cooldowns = new float[3];
     private int m_indexHabilities;
 
     //Estado
@@ -50,6 +51,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private int performedHabilityIndex = 0;
+
     private Weapon _weapon;
 
     private void Awake()
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.ChangeHability.started += (ctx) => OnNextHability();
         DOTween.Init();
+
+
     }
 
     private void FixedUpdate()
@@ -78,6 +83,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Se reduce el tiempo de los cooldowns.
+        UpdateCooldowns();
+
         if (!playerCanControl) return;
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
         if (dir == Vector2.zero && (Vector2) transform.position == targetPosition)
@@ -153,11 +161,19 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
+    private void UpdateCooldowns()
+    {
+        for (int i = 0; i < cooldowns.Length; i++)
+        {
+            if(cooldowns[i] > 0) cooldowns[i] -= Time.deltaTime;
+        }
+    }
+
     #region Habilities
 
     private void Teleport()
     {
-        if ((Vector2) transform.position != targetPosition) return;
+        if ((Vector2) transform.position != targetPosition || !CheckCooldown()) return;
         StartCoroutine(DoTeleport());
     }
 
@@ -219,6 +235,7 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetTrigger("teleport");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        SetCooldown();
         playerCanControl = true;
     }
 
@@ -277,6 +294,7 @@ public class PlayerController : MonoBehaviour
 
     private void DashFinish()
     {
+        SetCooldown();
         playerCanControl = true;
         isDashing = false;
     }
@@ -286,17 +304,27 @@ public class PlayerController : MonoBehaviour
         switch (direction)
         {
             case Direction.right:
-                if (_weapon.fire(1, 0)) anim.SetTrigger("shoot");
+                if (_weapon.Fire(1, 0)) anim.SetTrigger("shoot");
                 break;
             case Direction.left:
-                if (_weapon.fire(-1, 0)) anim.SetTrigger("shoot");
+                if (_weapon.Fire(-1, 0)) anim.SetTrigger("shoot");
                 break;
             case Direction.up:
-                if (_weapon.fire(0, 1)) anim.SetTrigger("shoot");
+                if (_weapon.Fire(0, 1)) anim.SetTrigger("shoot");
                 break;
             case Direction.down:
-                if (_weapon.fire(0, -1)) anim.SetTrigger("shoot");
+                if (_weapon.Fire(0, -1)) anim.SetTrigger("shoot");
                 break;
+        }
+    }
+
+    private void PEM(float time)
+    {
+        if (!CheckCooldown()) return;
+        SetCooldown();
+        foreach(Enemy e in FindObjectsOfType<Enemy>())
+        {
+            e.timeParalized += time;
         }
     }
 
@@ -310,6 +338,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!playerCanControl) return;
         Debug.Log("Habilidad: " + IndexHabilities);
+        performedHabilityIndex = IndexHabilities;
         switch (habilities[IndexHabilities])
         {
             //Aqu� aparecen las habilidades activas.
@@ -322,6 +351,9 @@ public class PlayerController : MonoBehaviour
             case 2:
                 Dash();
                 break;
+            case 3:
+                PEM(3);
+                break;
             default:
                 break;
         }
@@ -329,16 +361,41 @@ public class PlayerController : MonoBehaviour
 
     private void OnNextHability()
     {
+        OnNextHability(IndexHabilities);
+    }
+
+    private void OnNextHability(int initialHability)
+    {
         IndexHabilities++;
+        //Para evitar recursión infinita.
+        if (IndexHabilities == initialHability) return;
         switch (habilities[IndexHabilities])
         {
             //Aqu� se indican las habilidades pasivas.
-            case 3:
-                OnNextHability();
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                OnNextHability(initialHability);
                 break;
             default:
                 break;
         }
+    }
+
+    #endregion
+
+    #region Cooldowns
+
+    public bool CheckCooldown()
+    {
+        return cooldowns[performedHabilityIndex] <= 0;
+    }
+
+    public void SetCooldown()
+    {
+        cooldowns[performedHabilityIndex] = totalCooldowns[habilities[performedHabilityIndex]];
     }
 
     #endregion

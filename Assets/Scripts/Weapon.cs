@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public bool fire(float velX, float velY)
+    public bool Fire(float velX, float velY)
     {
         if (canShoot)
         {

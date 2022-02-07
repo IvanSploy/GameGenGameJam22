@@ -81,6 +81,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   habilities: 000000000100000002000000
+  totalCooldowns:
+  - 5
+  - 0
+  - 2
+  - 10
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  isDashing: 0
 --- !u!114 &2152462235626531371
 MonoBehaviour:
   m_ObjectHideFlags: 0

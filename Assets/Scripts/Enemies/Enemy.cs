@@ -20,6 +20,9 @@ public abstract class Enemy : MonoBehaviour
     public bool changeAfterMoves = false;
     public int moves = 3;
 
+    //Jugador
+    public float timeParalized = 0;
+
     private int currentMoves = 0;
 
     private void Awake()
@@ -32,6 +35,13 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
+
+        if(timeParalized > 0)
+        {
+            timeParalized -= Time.deltaTime;
+            return;
+        }
+
         if ((Vector2)transform.position == targetPosition)
         {
             if (changeAfterMoves)
@@ -126,5 +136,25 @@ public abstract class Enemy : MonoBehaviour
             }
             return !result.collider;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            if(timeParalized > 0)
+            {
+                OnParalizedContact();
+            }
+            else
+            {
+                collision.GetComponent<PlayerEvents>().OnEnemy();
+            }
+        }
+    }
+
+    private void OnParalizedContact()
+    {
+        timeParalized += 1;
     }
 }
