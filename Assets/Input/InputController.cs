@@ -32,7 +32,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""id"": ""321a263a-4ada-4462-a3c9-e003e98940fa"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""ChangeHability"",
@@ -40,7 +40,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""id"": ""0b51b27a-a8b2-46c9-813f-37ab2afe01af"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [

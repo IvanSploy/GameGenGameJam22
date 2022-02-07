@@ -1130,6 +1130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6139602120575769385, guid: b4ca12b864d2fa3478b37030e805dc64, type: 3}
+      propertyPath: m_XDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139602120575769385, guid: b4ca12b864d2fa3478b37030e805dc64, type: 3}
+      propertyPath: m_YDamping
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6139602121371048934, guid: b4ca12b864d2fa3478b37030e805dc64, type: 3}
       propertyPath: m_RootOrder
       value: 11

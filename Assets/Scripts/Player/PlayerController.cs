@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        input.Player.Habilities.performed += (ctx) => ManageHabilities();
+        input.Player.Habilities.started += (ctx) => ManageHabilities();
+        input.Player.ChangeHability.started += (ctx) => OnNextHability();
     }
 
     private void FixedUpdate()
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Vector2 dir = input.Player.Movement.ReadValue<Vector2>();
-        if ((Vector2) transform.position == targetPosition)
+        if (dir == Vector2.zero && (Vector2) transform.position == targetPosition)
         {
             anim.SetFloat("speed", 0);
         }
@@ -71,23 +72,19 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("speed", speed + 1);
         }
         
-        
-        //INICIO DE HABILIDADES
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            indexHabilities = (indexHabilities + 1) % habilities.Length;
-        }
-        ////////////////////////
-        
         if (dir != Vector2.zero && (Vector2) transform.position == targetPosition)
         {
-            anim.SetFloat("speed", 0);
+            Direction prevDir = direction;
             if (dir.x > 0)
             {
                 direction = Direction.right;
                 if (CanMove)
                 {
-                    anim.SetTrigger("right");
+                    if (!prevDir.Equals(direction))
+                    {
+                        anim.SetFloat("speed", 0);
+                        anim.SetTrigger("right");
+                    }
                     targetPosition += Vector2.right;
                 }
             }
@@ -96,7 +93,11 @@ public class PlayerController : MonoBehaviour
                 direction = Direction.left;
                 if (CanMove)
                 {
-                    anim.SetTrigger("left");
+                    if (!prevDir.Equals(direction))
+                    {
+                        anim.SetFloat("speed", 0);
+                        anim.SetTrigger("left");
+                    }
                     targetPosition += Vector2.left;
                 }
             }
@@ -105,7 +106,11 @@ public class PlayerController : MonoBehaviour
                 direction = Direction.up;
                 if (CanMove)
                 {
-                    anim.SetTrigger("up");
+                    if (!prevDir.Equals(direction))
+                    {
+                        anim.SetFloat("speed", 0);
+                        anim.SetTrigger("up");
+                    }
                     targetPosition += Vector2.up;
                 }
             }
@@ -114,12 +119,15 @@ public class PlayerController : MonoBehaviour
                 direction = Direction.down;
                 if (CanMove)
                 {
-                    anim.SetTrigger("down");
+                    if (!prevDir.Equals(direction))
+                    {
+                        anim.SetFloat("speed", 0);
+                        anim.SetTrigger("down");
+                    }
                     targetPosition += Vector2.down;
                 }
             }
         }
-
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
@@ -143,30 +151,37 @@ public class PlayerController : MonoBehaviour
         }
         int i = 1;
         RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
-        while (!result.collider)
+        while (!result.collider && i <= 1000)
         {
             i++;
             result = Physics2D.Raycast(transform.position, dir, i, obstacles);
         }
-        Debug.Log(result.collider);
-        Vector2 aux = transform.position;
-        switch (direction)
+        if (i > 1000)
         {
-            case Direction.right:
-                aux += new Vector2(i - 1, 0);
-                break;
-            case Direction.left:
-                aux += new Vector2(-i + 1, 0);
-                break;
-            case Direction.up:
-                aux += new Vector2(0, i - 1);
-                break;
-            case Direction.down:
-                aux += new Vector2(0, -i + 1);
-                break;
+            Debug.LogWarning("Teleport fallido, demasiadas iteraciones.");
         }
-        targetPosition = aux;
-        transform.position = targetPosition;
+        else
+        {
+            Debug.Log(result.collider);
+            Vector2 aux = transform.position;
+            switch (direction)
+            {
+                case Direction.right:
+                    aux += new Vector2(i - 1, 0);
+                    break;
+                case Direction.left:
+                    aux += new Vector2(-i + 1, 0);
+                    break;
+                case Direction.up:
+                    aux += new Vector2(0, i - 1);
+                    break;
+                case Direction.down:
+                    aux += new Vector2(0, -i + 1);
+                    break;
+            }
+            targetPosition = aux;
+            transform.position = targetPosition;
+        }
     }
 
     private void Shoot()
@@ -204,6 +219,12 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    private void OnNextHability()
+    {
+        indexHabilities = (indexHabilities + 1) % habilities.Length;
+    }
+
     private bool CanMove
     {
         get
