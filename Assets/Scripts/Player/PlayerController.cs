@@ -73,7 +73,8 @@ public class PlayerController : MonoBehaviour
         input.Player.ChangeHability.started += (ctx) => OnNextHability();
         DOTween.Init();
 
-
+        //Activar pasivas.
+        CheckPasives();
     }
 
     private void FixedUpdate()
@@ -328,10 +329,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Call this method when User choose this Hability
+    //Call this methods when User choose this Hability
     private void MoreSpeed(int inc)
     {
         speed += inc;
+    }
+    
+    private void LessCountdown(float div)
+    {
+        for (int i = 0; i < totalCooldowns.Length; i++)
+        {
+            totalCooldowns[i] /= div;
+        }
+    }
+
+    //Pasivas
+    private void CheckPasives()
+    {
+        for (int i = 0; i < habilities.Length; i++)
+        {
+            switch (habilities[i])
+            {
+                case 7:
+                    MoreSpeed(2);
+                    break;
+                case 8:
+                    LessCountdown(2);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void ManageHabilities()
