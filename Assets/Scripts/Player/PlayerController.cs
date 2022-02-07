@@ -32,20 +32,32 @@ public class PlayerController : MonoBehaviour
 
     //Habilites
     public int[] habilities = {0, 1, 2};
-    private int indexHabilities;
+    private int m_indexHabilities;
+    public int IndexHabilities
+    {
+        get
+        {
+            return m_indexHabilities;
+        }
+
+        set
+        {
+            m_indexHabilities = value;
+            if (m_indexHabilities < -habilities.Length) m_indexHabilities = 0;
+            m_indexHabilities = m_indexHabilities >= habilities.Length ? m_indexHabilities %= habilities.Length : m_indexHabilities;
+            m_indexHabilities = m_indexHabilities < 0 ? m_indexHabilities = habilities.Length + m_indexHabilities : m_indexHabilities;
+        }
+    }
     private Weapon _weapon;
     private void Awake()
     {
-        indexHabilities = 0;
+        IndexHabilities = 0;
         anim = GetComponentInChildren<Animator>();
         _weapon = GetComponentInChildren<Weapon>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         direction = Direction.down;
         input = new InputController();
-        float x = (int) (transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
-        float y = (int) (transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
-        float z = transform.position.z;
-        transform.position = new Vector3(x, y, z);
+        CenterPlayer();
         targetPosition = transform.position;
     }
 
@@ -131,56 +143,67 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
+    public void CenterPlayer()
+    {
+        float x = (int)(transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
+        float y = (int)(transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
+        float z = transform.position.z;
+        transform.position = new Vector3(x, y, z);
+    }
+
     private void Teleport()
     {
-        Vector2 dir = Vector2.zero;
-        switch (direction)
+        if ((Vector2)transform.position == targetPosition)
         {
-            case Direction.right:
-                dir = Vector2.right;
-                break;
-            case Direction.left:
-                dir = Vector2.left;
-                break;
-            case Direction.up:
-                dir = Vector2.up;
-                break;
-            case Direction.down:
-                dir = Vector2.down;
-                break;
-        }
-        int i = 1;
-        RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
-        while (!result.collider && i <= 1000)
-        {
-            i++;
-            result = Physics2D.Raycast(transform.position, dir, i, obstacles);
-        }
-        if (i > 1000)
-        {
-            Debug.LogWarning("Teleport fallido, demasiadas iteraciones.");
-        }
-        else
-        {
-            Debug.Log(result.collider);
-            Vector2 aux = transform.position;
+            Vector2 dir = Vector2.zero;
             switch (direction)
             {
                 case Direction.right:
-                    aux += new Vector2(i - 1, 0);
+                    dir = Vector2.right;
                     break;
                 case Direction.left:
-                    aux += new Vector2(-i + 1, 0);
+                    dir = Vector2.left;
                     break;
                 case Direction.up:
-                    aux += new Vector2(0, i - 1);
+                    dir = Vector2.up;
                     break;
                 case Direction.down:
-                    aux += new Vector2(0, -i + 1);
+                    dir = Vector2.down;
                     break;
             }
-            targetPosition = aux;
-            transform.position = targetPosition;
+            int i = 1;
+            RaycastHit2D result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+            while (!result.collider && i <= 1000)
+            {
+                i++;
+                result = Physics2D.Raycast(transform.position, dir, i, obstacles);
+            }
+            if (i > 1000)
+            {
+                Debug.LogWarning("Teleport fallido, demasiadas iteraciones.");
+            }
+            else
+            {
+                Debug.Log(result.collider);
+                Vector2 aux = transform.position;
+                switch (direction)
+                {
+                    case Direction.right:
+                        aux += new Vector2(i - 1, 0);
+                        break;
+                    case Direction.left:
+                        aux += new Vector2(-i + 1, 0);
+                        break;
+                    case Direction.up:
+                        aux += new Vector2(0, i - 1);
+                        break;
+                    case Direction.down:
+                        aux += new Vector2(0, -i + 1);
+                        break;
+                }
+                targetPosition = aux;
+                transform.position = targetPosition;
+            }
         }
     }
 
@@ -205,24 +228,33 @@ public class PlayerController : MonoBehaviour
 
     private void ManageHabilities()
     {
-        Debug.Log("Habilidad: " + indexHabilities);
-        switch (indexHabilities)
+        Debug.Log("Habilidad: " + IndexHabilities);
+        switch (IndexHabilities)
         {
+            //Aquí aparecen las habilidades activas.
             case 0:
-                if ((Vector2) transform.position == targetPosition) Teleport();
+                Teleport();
                 break;
             case 1:
                 Shoot();
                 break;
-            case 2:
-                
+            default:
                 break;
         }
     }
 
     private void OnNextHability()
     {
-        indexHabilities = (indexHabilities + 1) % habilities.Length;
+        IndexHabilities++;
+        switch (IndexHabilities)
+        {
+            //Aquí se indican las habilidades pasivas.
+            case 2:
+                OnNextHability();
+                break;
+            default:
+                break;
+        }
     }
 
     private bool CanMove
