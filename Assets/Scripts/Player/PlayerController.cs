@@ -150,7 +150,8 @@ public class PlayerController : MonoBehaviour
         float x = (int)(transform.position.x) + Mathf.Sign(transform.position.x) * 0.5f;
         float y = (int)(transform.position.y) + Mathf.Sign(transform.position.y) * 0.5f;
         float z = transform.position.z;
-        transform.position = new Vector3(x, y, z);
+        //transform.position = new Vector3(x, y, z);
+        targetPosition = new Vector3(x, y, z);
     }
 
     private void Teleport()
