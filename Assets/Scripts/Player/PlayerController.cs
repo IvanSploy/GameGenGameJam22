@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
         direction = Direction.down;
         input = new InputController();
         CenterPlayer();
-        targetPosition = transform.position;
     }
 
     private void Start()
