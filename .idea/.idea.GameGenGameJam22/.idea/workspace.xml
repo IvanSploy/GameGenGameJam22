@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="441ba163-0d38-4b9e-9a28-68c1f5178e4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +45,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/PruebaLevel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ChangeLevels.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="24hrwlmJ6wLjSplDvYv6TFhwO95" />
