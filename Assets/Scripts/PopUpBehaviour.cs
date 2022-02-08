@@ -71,7 +71,6 @@ public class PopUpBehaviour : MonoBehaviour
     {
         TriggerPopUp();
         ChangeLevels.instance.nowLevel++;
-        SceneTransitioner.instance.OnTransition.AddListener(() => ChangeLevels.instance.ChangeLevel(ChangeLevels.instance.nowLevel));
-        SceneTransitioner.instance.StartTransition($"Level {ChangeLevels.instance.nowLevel}", "Go to recharge.", 1);
+        ChangeLevels.instance.ChangeLevel(ChangeLevels.instance.nowLevel);
     }
 }

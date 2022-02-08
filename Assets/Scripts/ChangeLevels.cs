@@ -23,7 +23,7 @@ public class ChangeLevels : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "LevelSelector")
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             UpdateBlocks();
         }
@@ -31,10 +31,9 @@ public class ChangeLevels : MonoBehaviour
     //Call this method when finish condition is true
     public void ChangeLevel(int level)
     {
-        if (level == 0)
-            SceneManager.LoadScene("LevelSelector");
-        else 
-            SceneManager.LoadScene("PruebaNivel" + level);
+        PersistanceData.instance.level = level;
+        SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("MecanicsSelector"));
+        SceneTransitioner.instance.StartTransition($"Level {nowLevel}", "Go to recharge.", 1);
     }
 
     public void UnlockLevel()
@@ -52,6 +51,7 @@ public class ChangeLevels : MonoBehaviour
     {
         for (int i = 0; i < desLevels + 1; i++)
         {
+            Debug.Log(i);
             levels[i].interactable = true;
         }
     }
