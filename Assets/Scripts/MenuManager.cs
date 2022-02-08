@@ -21,6 +21,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private GameObject creditsExit;
     [SerializeField] private GameObject creditsText;
+    [SerializeField] private GameObject creditsNames;
     
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class MenuManager : MonoBehaviour
 
         creditsExit.transform.position = new Vector3(creditsExit.transform.position.x - 500, creditsExit.transform.position.y, creditsExit.transform.position.z);
         creditsText.transform.position = new Vector3(creditsText.transform.position.x, creditsText.transform.position.y + 800, creditsText.transform.position.z);
+        creditsNames.transform.position = new Vector3(creditsNames.transform.position.x, creditsNames.transform.position.y + 800, creditsNames.transform.position.z);
     }
 
     public void MainToCredits()
@@ -52,6 +54,7 @@ public class MenuManager : MonoBehaviour
             .Join(mainMenuText.transform.DOMoveY(mainMenuText.transform.position.y + 1000, 0.5f))
             .Append(creditsExit.transform.DOMoveX(creditsExit.transform.position.x + 600, 0.5f))
             .Join(creditsText.transform.DOMoveY(creditsText.transform.position.y - 900, 0.5f))
+            .Join(creditsNames.transform.DOMoveY(creditsNames.transform.position.y - 900, 0.5f))
             .OnComplete(() => EnableButtonsCredits(true));
     }
 
@@ -62,6 +65,7 @@ public class MenuManager : MonoBehaviour
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(creditsExit.transform.DOMoveX(creditsExit.transform.position.x - 600, 0.5f))
             .Join(creditsText.transform.DOMoveY(creditsText.transform.position.y + 900, 0.5f))
+            .Join(creditsNames.transform.DOMoveY(creditsNames.transform.position.y + 900, 0.5f))
             .Append(mainMenuExit.transform.DOMoveX(mainMenuExit.transform.position.x + 600, 0.5f))
             .Join(mainMenuCredits.transform.DOMoveX(mainMenuCredits.transform.position.x - 600, 0.5f))
             .Join(mainMenuPlay.transform.DOMoveY(mainMenuPlay.transform.position.y - 1000, 0.5f))
