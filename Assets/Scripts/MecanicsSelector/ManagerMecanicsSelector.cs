@@ -197,13 +197,11 @@ public class ManagerMecanicsSelector : MonoBehaviour
 
     public void GoBackMenu()
     {
-        //PONER LA ESCENA DE SELECCION DE NIVELES
-        //SceneManager.LoadScene("OtherSceneName");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void GoPlayLevel()
     {
-        //PONER LA ESCENA DEL NIVEL CORRESPONDIENTE
-        //SceneManager.LoadScene("OtherSceneName");
+        SceneManager.LoadScene("Level" + PersistanceData.instance.level);
     }
 }
