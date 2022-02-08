@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 19bb9b8aa89cc7442811b289aa23ddca
+guid: 50f6dcbe1a45b474c807e1a02fbd3b1f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -8,15 +8,16 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
-  missingFiles: []
-  errors: []
-  warnings:
-  - Pixels Per Unit mismatch between map (100) and tileset 'tilesetggj.tsx' (32)
+  missingFiles:
+  - Assets/tileset ggj.tsx
+  errors:
+  - 'Missing tileset asset: ../tileset ggj.tsx'
+  warnings: []
   missingSortingLayers: []
   missingLayers: []
   missingTags: []
   importerVersion: 24
-  pixelsPerUnit: 100
+  pixelsPerUnit: 32
   edgesPerEllipse: 32
   numberOfObjectsImported: 2
   tilesAsObjects: 0

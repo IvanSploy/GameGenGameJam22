@@ -35,9 +35,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""ChangeHability"",
+                    ""name"": ""RightHability"",
                     ""type"": ""PassThrough"",
                     ""id"": ""0b51b27a-a8b2-46c9-813f-37ab2afe01af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""LeftHability"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e482a0b-dc44-48dc-a67c-9ef251ca2abc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
@@ -139,7 +147,40 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ChangeHability"",
+                    ""action"": ""RightHability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7312b9d6-88e7-446b-9989-e04d86a599a1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightHability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffe2cd3b-d6b2-4087-a218-b8e9d5c99b58"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftHability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8bd953a-81dd-4a48-8268-c264171089b8"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftHability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -152,7 +193,8 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Habilities = m_Player.FindAction("Habilities", throwIfNotFound: true);
-        m_Player_ChangeHability = m_Player.FindAction("ChangeHability", throwIfNotFound: true);
+        m_Player_RightHability = m_Player.FindAction("RightHability", throwIfNotFound: true);
+        m_Player_LeftHability = m_Player.FindAction("LeftHability", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,14 +246,16 @@ public class @InputController : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Habilities;
-    private readonly InputAction m_Player_ChangeHability;
+    private readonly InputAction m_Player_RightHability;
+    private readonly InputAction m_Player_LeftHability;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
         public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Habilities => m_Wrapper.m_Player_Habilities;
-        public InputAction @ChangeHability => m_Wrapper.m_Player_ChangeHability;
+        public InputAction @RightHability => m_Wrapper.m_Player_RightHability;
+        public InputAction @LeftHability => m_Wrapper.m_Player_LeftHability;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -227,9 +271,12 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Habilities.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
                 @Habilities.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
                 @Habilities.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHabilities;
-                @ChangeHability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
-                @ChangeHability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
-                @ChangeHability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChangeHability;
+                @RightHability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHability;
+                @RightHability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHability;
+                @RightHability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightHability;
+                @LeftHability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
+                @LeftHability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
+                @LeftHability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -240,9 +287,12 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Habilities.started += instance.OnHabilities;
                 @Habilities.performed += instance.OnHabilities;
                 @Habilities.canceled += instance.OnHabilities;
-                @ChangeHability.started += instance.OnChangeHability;
-                @ChangeHability.performed += instance.OnChangeHability;
-                @ChangeHability.canceled += instance.OnChangeHability;
+                @RightHability.started += instance.OnRightHability;
+                @RightHability.performed += instance.OnRightHability;
+                @RightHability.canceled += instance.OnRightHability;
+                @LeftHability.started += instance.OnLeftHability;
+                @LeftHability.performed += instance.OnLeftHability;
+                @LeftHability.canceled += instance.OnLeftHability;
             }
         }
     }
@@ -251,6 +301,7 @@ public class @InputController : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnHabilities(InputAction.CallbackContext context);
-        void OnChangeHability(InputAction.CallbackContext context);
+        void OnRightHability(InputAction.CallbackContext context);
+        void OnLeftHability(InputAction.CallbackContext context);
     }
 }

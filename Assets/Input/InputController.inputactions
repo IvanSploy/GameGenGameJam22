@@ -22,9 +22,17 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "ChangeHability",
+                    "name": "RightHability",
                     "type": "PassThrough",
                     "id": "0b51b27a-a8b2-46c9-813f-37ab2afe01af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "LeftHability",
+                    "type": "Button",
+                    "id": "0e482a0b-dc44-48dc-a67c-9ef251ca2abc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
@@ -126,7 +134,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ChangeHability",
+                    "action": "RightHability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7312b9d6-88e7-446b-9989-e04d86a599a1",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffe2cd3b-d6b2-4087-a218-b8e9d5c99b58",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8bd953a-81dd-4a48-8268-c264171089b8",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
