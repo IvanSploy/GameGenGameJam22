@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="441ba163-0d38-4b9e-9a28-68c1f5178e4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/cards/Ilustración_sin_título.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +32,7 @@
     <setting file="file://$PROJECT_DIR$/../GlobalGameJam22/Assets/Scripts/Player/PlayerManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FinishLevel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Input/InputController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -45,6 +46,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ChangeLevels.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/MenuManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="24hrwlmJ6wLjSplDvYv6TFhwO95" />
@@ -109,6 +111,7 @@
       <workItem from="1644093917022" duration="1174000" />
       <workItem from="1644152362437" duration="6302000" />
       <workItem from="1644257620041" duration="6297000" />
+      <workItem from="1644339020523" duration="6209000" />
     </task>
     <servers />
   </component>
