@@ -276,4 +276,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seconds: 10
   animator: {fileID: 6958640657356626130}
+  moreTime: {fileID: 9100000, guid: be32ad5b58773c140b139e1eba3aba38, type: 2}
   _image: {fileID: 6958640657356626131}

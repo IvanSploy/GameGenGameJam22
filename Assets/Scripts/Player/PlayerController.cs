@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private InputController input;
     private Rigidbody2D _rigidbody2D;
+    private Light _lantern;
+    private Light _miniLight;
+    public SpriteRenderer _shield;
 
     //Propiedades
     public int speed = 5;
@@ -31,10 +34,10 @@ public class PlayerController : MonoBehaviour
     private int m_indexHabilities;
 
     //Estado
-    private bool playerCanControl = true;
+    public bool playerCanControl = true;
     public bool isDashing = false;
 
-    public int IndexHabilities
+    public int HabilityIndex
     {
         get { return m_indexHabilities; }
 
@@ -57,10 +60,16 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        IndexHabilities = 0;
+        HabilityIndex = 0;
         anim = GetComponentInChildren<Animator>();
         _weapon = GetComponentInChildren<Weapon>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        if (!_lantern || !_miniLight)
+        {
+            Light[] lights = GetComponentsInChildren<Light>();
+            _lantern = lights[0];
+            _miniLight = lights[1];
+        }
         direction = Direction.down;
         input = new InputController();
         transform.position = GameManager.CenterVector(transform.position);
@@ -71,10 +80,12 @@ public class PlayerController : MonoBehaviour
     {
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.ChangeHability.started += (ctx) => OnNextHability();
-        DOTween.Init();
+        DOTween.Init();            
 
         //Activar pasivas.
         CheckPasives();
+        //Activar habilidad automatica.
+        StartHability();
     }
 
     private void FixedUpdate()
@@ -158,7 +169,10 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+        if (habilities[HabilityIndex] == 4)
+        {
+            Shield();
+        }
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
@@ -174,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
     private void Teleport()
     {
-        if ((Vector2) transform.position != targetPosition || !CheckCooldown()) return;
+        if ((Vector2) transform.position != targetPosition || !CheckCooldown(performedHabilityIndex)) return;
         StartCoroutine(DoTeleport());
     }
 
@@ -236,7 +250,7 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetTrigger("teleport");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        SetCooldown();
+        SetCooldown(performedHabilityIndex);
         playerCanControl = true;
     }
 
@@ -295,7 +309,7 @@ public class PlayerController : MonoBehaviour
 
     private void DashFinish()
     {
-        SetCooldown();
+        SetCooldown(performedHabilityIndex);
         playerCanControl = true;
         isDashing = false;
     }
@@ -321,12 +335,18 @@ public class PlayerController : MonoBehaviour
 
     private void PEM(float time)
     {
-        if (!CheckCooldown()) return;
-        SetCooldown();
+        if (!CheckCooldown(performedHabilityIndex)) return;
+        SetCooldown(performedHabilityIndex);
         foreach(Enemy e in FindObjectsOfType<Enemy>())
         {
             e.timeParalized += time;
         }
+    }
+
+    private void SetLight(bool active)
+    {
+        _lantern.enabled = active;
+        _miniLight.enabled = !active;
     }
 
     //Call this methods when User choose this Hability
@@ -343,6 +363,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //5s mientras este seleccionado
+    private void Shield()
+    {
+        if (!CheckCooldown(HabilityIndex)) return;
+        FindObjectOfType<PlayerEvents>().haveShield = true;
+        _shield.enabled = true;
+    }
+
     //Pasivas
     private void CheckPasives()
     {
@@ -350,6 +378,9 @@ public class PlayerController : MonoBehaviour
         {
             switch (habilities[i])
             {
+                case 6:
+                    FindObjectOfType<Battery>().SelectPassive();
+                    break;
                 case 7:
                     MoreSpeed(2);
                     break;
@@ -362,12 +393,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void StartHability()
+    {
+        switch (habilities[0])
+        {
+            case 4:
+                Shield();
+                break;
+            case 5:
+                SetLight(true);
+                break;
+            default:
+                break;
+        }
+    }
+
     private void ManageHabilities()
     {
         if (!playerCanControl) return;
-        Debug.Log("Habilidad: " + IndexHabilities);
-        performedHabilityIndex = IndexHabilities;
-        switch (habilities[IndexHabilities])
+        Debug.Log("Habilidad: " + HabilityIndex);
+        performedHabilityIndex = HabilityIndex;
+        switch (habilities[HabilityIndex])
         {
             //Aqu� aparecen las habilidades activas.
             case 0:
@@ -389,19 +435,36 @@ public class PlayerController : MonoBehaviour
 
     private void OnNextHability()
     {
-        OnNextHability(IndexHabilities);
+        OnNextHability(HabilityIndex);
     }
 
     private void OnNextHability(int initialHability)
     {
-        IndexHabilities++;
-        //Para evitar recursión infinita.
-        if (IndexHabilities == initialHability) return;
-        switch (habilities[IndexHabilities])
+        //Desactivar activas automáticas.
+        switch (habilities[HabilityIndex])
         {
-            //Aqu� se indican las habilidades pasivas.
             case 4:
+                GetComponent<PlayerEvents>().haveShield = false;
+                _shield.enabled = false;
+                break;
             case 5:
+                SetLight(false);
+                break;
+        }
+        HabilityIndex++;
+        //Para evitar recursión infinita. Si todas son pasivas.
+        if (HabilityIndex == initialHability) return;
+
+        //Aquí se indican las habilidades pasivas.
+        //También se activan las activas automáticas.
+        switch (habilities[HabilityIndex])
+        {
+            case 4:
+                Shield();
+                break;
+            case 5:
+                SetLight(true);
+                break;
             case 6:
             case 7:
             case 8:
@@ -416,14 +479,14 @@ public class PlayerController : MonoBehaviour
 
     #region Cooldowns
 
-    public bool CheckCooldown()
+    public bool CheckCooldown(int index)
     {
-        return cooldowns[performedHabilityIndex] <= 0;
+        return cooldowns[index] <= 0;
     }
 
-    public void SetCooldown()
+    public void SetCooldown(int index)
     {
-        cooldowns[performedHabilityIndex] = totalCooldowns[habilities[performedHabilityIndex]];
+        cooldowns[index] = totalCooldowns[habilities[index]];
     }
 
     #endregion

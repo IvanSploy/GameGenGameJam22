@@ -4,6 +4,7 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.Animations;
 
 public class Battery : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Battery : MonoBehaviour
     private int maxSeconds;
     private bool isSelected = false;
     [SerializeField] private Animator animator;
-    [SerializeField] private Animator moreTime;
+    [SerializeField] private AnimatorController moreTime;
     private TextMeshProUGUI TMP;
     [SerializeField] private Image _image;
     void Start()
@@ -38,7 +39,7 @@ public class Battery : MonoBehaviour
         yield return new WaitForSeconds(sleepTime);
         StartCoroutine(DecrementTime());
         if (isSelected)
-            passiveMoreTime();
+            PassiveMoreTime();
     }
 
     IEnumerator DecrementTime()
@@ -59,15 +60,15 @@ public class Battery : MonoBehaviour
     }
     
     //Call this method when User select Time Hability
-    public void selectPassive()
+    public void SelectPassive()
     {
         isSelected = true;
     }
     
-    private void passiveMoreTime()
+    private void PassiveMoreTime()
     {
         seconds += 20;
-        animator = moreTime;
+        animator.runtimeAnimatorController = moreTime;
         animator.Play("MoreBattery");
     }
 }
