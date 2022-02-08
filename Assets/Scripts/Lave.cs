@@ -10,7 +10,10 @@ public class Lave : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (!other.GetComponent<PlayerController>().isDashing)
+            {
+                FindObjectOfType<PlayerEvents>().MovePlayer();
                 Debug.Log("Has muerto");
+            }
         }
     }
 }
