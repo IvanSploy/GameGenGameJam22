@@ -20,11 +20,13 @@ public class GameManager : MonoBehaviour
     public void BatteryOff()
     {
         Debug.Log("Finish");
+        PopUpBehaviour.instance.TriggerPopUp("Game Over", Color.red, false);
     }
 
     public void FinishLevel()
     {
         Debug.Log("Nivel completado");
+        PopUpBehaviour.instance.TriggerPopUp("Victory", Color.yellow, true);
     }
 
     public void Play()

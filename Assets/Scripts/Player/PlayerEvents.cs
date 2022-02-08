@@ -60,6 +60,7 @@ public class PlayerEvents : MonoBehaviour
 
     IEnumerator DoMovePlayer()
     {
+        _player.GetComponent<Collider2D>().enabled = false;
         _player.playerCanControl = false;
         _player.anim.SetTrigger("teleport");
         _player.GetComponentInChildren<SpriteRenderer>().color = Color.red;
@@ -79,6 +80,7 @@ public class PlayerEvents : MonoBehaviour
 
         _player.anim.SetTrigger("teleport");
         yield return new WaitForSeconds(_player.anim.GetCurrentAnimatorStateInfo(0).length);
+        _player.GetComponent<Collider2D>().enabled = true;
         _player.playerCanControl = true;
     }
 }
