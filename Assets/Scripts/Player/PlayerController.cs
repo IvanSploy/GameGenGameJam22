@@ -427,6 +427,7 @@ public class PlayerController : MonoBehaviour
                 SetLight(true);
                 break;
             default:
+                SetLight(false);
                 break;
         }
         UpdateImageHabilities();

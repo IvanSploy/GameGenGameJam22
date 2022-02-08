@@ -31,7 +31,6 @@ public class ChangeLevels : MonoBehaviour
     //Call this method when finish condition is true
     public void ChangeLevel(int level)
     {
-
         if (level == 0)
             SceneManager.LoadScene("LevelSelector");
         else 
@@ -61,9 +60,15 @@ public class ChangeLevels : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
     private void BackToMenu()
     {
         ChangeLevel(0);
+    }
+
+    public void BackToMecanics()
+    {
+        SceneManager.LoadScene("MecanicsSelector");
     }
 
     public void Save()
