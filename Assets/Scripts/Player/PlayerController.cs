@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public enum Direction { up, down, left, right }
 
     //Referencias
-    private Animator anim;
+    public Animator anim;
     private InputController input;
     private Rigidbody2D _rigidbody2D;
     private Light _lantern;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     //Habilites
     public int[] habilities = {0, 1, 2};
     public float[] totalCooldowns = new float[9];
-    private float[] cooldowns = new float[3];
+    public float[] cooldowns = new float[3];
     private int m_indexHabilities;
 
     //Estado
@@ -79,9 +79,12 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         input.Player.Habilities.started += (ctx) => ManageHabilities();
-        input.Player.ChangeHability.started += (ctx) => OnNextHability();
-        DOTween.Init();            
+        input.Player.LeftHability.started += (ctx) => OnNextHability(true);
+        input.Player.RightHability.started += (ctx) => OnNextHability(false);
+        DOTween.Init();
 
+        //Obtener habilidades
+        if (PersistanceData.instance) habilities = PersistanceData.instance.habilities;
         //Activar pasivas.
         CheckPasives();
         //Activar habilidad automatica.
@@ -182,6 +185,20 @@ public class PlayerController : MonoBehaviour
         {
             if(cooldowns[i] > 0) cooldowns[i] -= Time.deltaTime;
         }
+        UpdateImageCooldowns();
+    }
+
+    private void UpdateImageCooldowns()
+    {
+        int actualIndex = HabilityIndex - 1;
+        if (actualIndex < 0) actualIndex = habilities.Length - 1;
+        for (int i = 0; i < cooldowns.Length; i++)
+        {
+            float perc = cooldowns[actualIndex] / totalCooldowns[habilities[actualIndex]];
+            HabilityHUD.instance.UpdateCooldown(i, perc);
+            actualIndex++;
+            if (actualIndex >= habilities.Length) actualIndex = 0;
+        }
     }
 
     #region Habilities
@@ -256,6 +273,7 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
+        if (!CheckCooldown(performedHabilityIndex)) return;
         playerCanControl = false;
         isDashing = true;
         anim.SetTrigger("dash");
@@ -307,7 +325,12 @@ public class PlayerController : MonoBehaviour
         transform.DOMove(targetPosition, 0.5f).OnComplete(DashFinish);
     }
 
-    private void DashFinish()
+    public void StopTween()
+    {
+        transform.DOKill();
+    }
+
+    public void DashFinish()
     {
         SetCooldown(performedHabilityIndex);
         playerCanControl = true;
@@ -406,6 +429,7 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+        UpdateImageHabilities();
     }
 
     private void ManageHabilities()
@@ -433,12 +457,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnNextHability()
+    private void OnNextHability(bool left)
     {
-        OnNextHability(HabilityIndex);
+        OnNextHability(HabilityIndex, left);
     }
 
-    private void OnNextHability(int initialHability)
+    private void OnNextHability(int initialHability, bool left)
     {
         //Desactivar activas automáticas.
         switch (habilities[HabilityIndex])
@@ -451,7 +475,15 @@ public class PlayerController : MonoBehaviour
                 SetLight(false);
                 break;
         }
-        HabilityIndex++;
+        if (left)
+        {
+            HabilityIndex++;
+        }
+        else
+        {
+            HabilityIndex--;
+        }
+        UpdateImageHabilities();
         //Para evitar recursión infinita. Si todas son pasivas.
         if (HabilityIndex == initialHability) return;
 
@@ -468,10 +500,22 @@ public class PlayerController : MonoBehaviour
             case 6:
             case 7:
             case 8:
-                OnNextHability(initialHability);
+                OnNextHability(initialHability, left);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void UpdateImageHabilities()
+    {
+        int actualIndex = HabilityIndex - 1;
+        if (actualIndex < 0) actualIndex = habilities.Length - 1;
+        for (int i = 0; i < cooldowns.Length; i++)
+        {
+            HabilityHUD.instance.SetHability(i, habilities[actualIndex]);
+            actualIndex++;
+            if (actualIndex >= habilities.Length) actualIndex = 0;
         }
     }
 

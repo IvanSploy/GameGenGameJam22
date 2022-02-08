@@ -50,6 +50,22 @@ public class PlayerEvents : MonoBehaviour
 
     public void MovePlayer()
     {
+        if (_player.isDashing)
+        {
+            _player.StopTween();
+            _player.DashFinish();
+        }
+        StartCoroutine(DoMovePlayer());
+    }
+
+    IEnumerator DoMovePlayer()
+    {
+        _player.playerCanControl = false;
+        _player.anim.SetTrigger("teleport");
+        _player.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(_player.anim.GetCurrentAnimatorStateInfo(0).length);
+        _player.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+
         if (myCheckPoint > 0)
         {
             transform.position = GameManager.CenterVector(respawns[myCheckPoint].GetComponent<Checkpoint>().transform.position);
@@ -60,5 +76,9 @@ public class PlayerEvents : MonoBehaviour
             transform.position = GameManager.CenterVector(initialPosition.transform.position);
             _player.targetPosition = transform.position;
         }
+
+        _player.anim.SetTrigger("teleport");
+        yield return new WaitForSeconds(_player.anim.GetCurrentAnimatorStateInfo(0).length);
+        _player.playerCanControl = true;
     }
 }
