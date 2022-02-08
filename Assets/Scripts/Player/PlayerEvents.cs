@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class PlayerEvents : MonoBehaviour
 {
+    public bool haveShield = false;
     public void OnEnemy()
     {
         //Destroy(gameObject);
-        Debug.Log("Morí");
+        if (haveShield == false)
+            Debug.Log("MorÃ­");
+        else
+        {
+            Debug.Log("Rompe escudo");
+            haveShield = false;
+        }
     }
 }

@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.ChangeHability.started += (ctx) => OnNextHability();
         DOTween.Init();
+        if(habilities[0] == 4)
+            FindObjectOfType<PlayerEvents>().haveShield = true;
 
         //Activar pasivas.
         CheckPasives();
@@ -168,7 +170,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+        if(habilities[IndexHabilities] == 4)
+            FindObjectOfType<PlayerEvents>().haveShield = true;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
@@ -359,6 +362,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //5s mientras este seleccionado
+    private void Shield()
+    {
+        if (!CheckCooldown()) return;
+            SetCooldown();
+        FindObjectOfType<PlayerEvents>().haveShield = true;
+    }
+
     //Pasivas
     private void CheckPasives()
     {
@@ -444,6 +455,8 @@ public class PlayerController : MonoBehaviour
         switch (habilities[IndexHabilities])
         {
             case 4:
+                Shield();
+                break;
             case 5:
                 SetLight(true);
                 break;
