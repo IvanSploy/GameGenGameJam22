@@ -90,6 +90,7 @@ public class SceneTransitioner : MonoBehaviour
     private void EndTransition()
     {
         anim.SetTrigger("ChangeState");
+        OnTransition.RemoveAllListeners();
         OnEnd.Invoke();
     }
 }
