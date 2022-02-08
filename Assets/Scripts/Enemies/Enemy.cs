@@ -10,6 +10,7 @@ public abstract class Enemy : MonoBehaviour
     //Referencias
     private Animator anim;
     private Rigidbody2D _rigidbody2D;
+    public Sprite[] sprites = new Sprite[2];
 
     //Propiedades
     public Direction direction;
@@ -31,6 +32,13 @@ public abstract class Enemy : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         transform.position = GameManager.CenterVector(transform.position);
         targetPosition = transform.position;
+    }
+
+    void Start()
+    {
+        SpriteRenderer render = GetComponent<SpriteRenderer>();
+        render.sprite = sprites[Random.Range(0, sprites.Length)];
+        render.color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
     }
 
     private void Update()

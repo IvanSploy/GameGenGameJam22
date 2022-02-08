@@ -23,7 +23,7 @@ public class ChangeLevels : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "LevelSelector")
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             UpdateBlocks();
         }
@@ -31,11 +31,8 @@ public class ChangeLevels : MonoBehaviour
     //Call this method when finish condition is true
     public void ChangeLevel(int level)
     {
-
-        if (level == 0)
-            SceneManager.LoadScene("LevelSelector");
-        else 
-            SceneManager.LoadScene("PruebaNivel" + level);
+        PersistanceData.instance.level = level;
+        SceneManager.LoadScene("MecanicsSelector");
     }
 
     public void UnlockLevel()
