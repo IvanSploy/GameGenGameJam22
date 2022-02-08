@@ -58,9 +58,15 @@ public class ChangeLevels : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
     private void BackToMenu()
     {
         ChangeLevel(0);
+    }
+
+    public void BackToMecanics()
+    {
+        SceneManager.LoadScene("MecanicsSelector");
     }
 
     public void Save()
