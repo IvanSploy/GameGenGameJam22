@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class ManagerMecanicsSelector : MonoBehaviour
 {
-    [SerializeField] private GameObject [] _buttonsHabilities = new GameObject[3];
+    [SerializeField] private GameObject [] _cardsHabilities = new GameObject[3];
     [SerializeField] private Image [] _habilitiesSelected = new Image[3];
+    [SerializeField] private int[] _selected = new int[3];
     [SerializeField] private GameObject _goBackSelector;
     [SerializeField] private GameObject _goPlayLevel;
     [SerializeField] private GameObject[] _buttonsPositionsOutScene = new GameObject[3];
@@ -17,6 +18,7 @@ public class ManagerMecanicsSelector : MonoBehaviour
 
     [SerializeField] private Sprite[] _imagesHabilitiesSelected = new Sprite[10];
     [SerializeField] private Sprite[] _imagesHabilitiesButtons = new Sprite[9];
+    [SerializeField] private List<int> ordenAleatorio;
 
     //ARRAY QUE CONTIENE LO IMPORTANTE PARA ENVIAR A LA SIGUIENTE ESCENA :D
     private int [] _finalHabilities = new int[3];
@@ -26,18 +28,32 @@ public class ManagerMecanicsSelector : MonoBehaviour
 
     void Start()
     {
-        scale = _buttonsHabilities[0].GetComponent<RectTransform>().localScale;        
+        scale = _cardsHabilities[0].GetComponent<RectTransform>().localScale;        
         DOTween.Init();
         round = 0;
         _goPlayLevel.GetComponent<Button>().interactable = false;
         _goBackSelector.GetComponent<Button>().interactable = false;
         EnableButtons(false);
+        //Suffle -> Orden Aleatorio
+        List<int> orden = new List<int>();
+        for (int i = 0; i < _imagesHabilitiesButtons.Length; i++)
+        {
+            orden.Add(i);
+        }
+        while(orden.Count > 0)
+        {
+            int index = Random.Range(0, orden.Count);
+            ordenAleatorio.Add(orden[index]);
+            orden.RemoveAt(index);
+        }
+        ////
         for (int i = 0; i < 3; i++)
         {
-            _buttonsHabilities[i].GetComponent<Button>().image.sprite = _imagesHabilitiesButtons[i];
-            _buttonsHabilities[i].GetComponent<RectTransform>().position =
+            _cardsHabilities[i].GetComponent<Button>().image.sprite = _imagesHabilitiesButtons[ordenAleatorio[i]];
+            _selected[i] = ordenAleatorio[i];
+            _cardsHabilities[i].GetComponent<RectTransform>().position =
                 _buttonsPositionsOutScene[i].GetComponent<RectTransform>().position;
-            _buttonsHabilities[i].GetComponent<RectTransform>()
+            _cardsHabilities[i].GetComponent<RectTransform>()
                 .DOMove(_buttonsPositionsInScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>EnableButtons(true));
             _habilitiesSelected[i].sprite = _imagesHabilitiesSelected[9];
         }
@@ -55,8 +71,8 @@ public class ManagerMecanicsSelector : MonoBehaviour
     {
         EnableBackSelect(false);
         EnableButtons(false);
-        _habilitiesSelected[round - 1].sprite = _imagesHabilitiesSelected[numberButton + ((round - 1) * 3)];
-        PersistanceData.instance.habilities[round - 1] = numberButton + ((round - 1) * 3);
+        _habilitiesSelected[round - 1].sprite = _imagesHabilitiesSelected[ordenAleatorio[numberButton + ((round - 1) * 3)]];
+        PersistanceData.instance.habilities[round - 1] = _selected[numberButton];
         if (round == 3)
         {
             _goPlayLevel.GetComponent<Button>().interactable = true;
@@ -65,19 +81,20 @@ public class ManagerMecanicsSelector : MonoBehaviour
                 if (i != numberButton)
                 {
                     Sequence mySequence = DOTween.Sequence();
-                    mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                    mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                         .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>EnableBackSelect(true)));
                 }
                 else
                 {
+                    int j = i;
                     Sequence mySequence = DOTween.Sequence();
-                    mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                    mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                         .DOMove(_habilitiesSelected[round - 1].GetComponent<RectTransform>().position, 1));
-                    mySequence.Join(_buttonsHabilities[i].GetComponent<RectTransform>()
-                        .DOScale(new Vector3(0, 0, 1), 1)).OnComplete(()=>AnimationChangeHabilities(i));
-                    mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                    mySequence.Join(_cardsHabilities[i].GetComponent<RectTransform>()
+                        .DOScale(new Vector3(0, 0, 1), 1)).OnComplete(() => EnableButtons(true));
+                    mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                         .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 0.5f));
-                    mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>().DOScale(scale, 0.5f));
+                    mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>().DOScale(scale, 0.5f));
                 }
             }
             return;
@@ -86,23 +103,25 @@ public class ManagerMecanicsSelector : MonoBehaviour
         {
             if (i != numberButton)
             {
+                int j = i;
                 Sequence mySequence = DOTween.Sequence();
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
-                    .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>AnimationChangeHabilities(i)));
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
+                    .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>AnimationChangeHabilities(j)));
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                     .DOMove(_buttonsPositionsInScene[i].GetComponent<RectTransform>().position, 2));
             }
             else
             {
+                int j = i;
                 Sequence mySequence = DOTween.Sequence();
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
-                    .DOMove(_habilitiesSelected[round - 1].GetComponent<RectTransform>().position, 1).OnComplete(()=>AnimationChangeHabilities(i)));
-                mySequence.Join(_buttonsHabilities[i].GetComponent<RectTransform>()
-                    .DOScale(new Vector3(0, 0, 1), 1)).OnComplete(()=>AnimationChangeHabilities(i));
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
+                    .DOMove(_habilitiesSelected[round - 1].GetComponent<RectTransform>().position, 1).OnComplete(()=>AnimationChangeHabilities(j)));
+                mySequence.Join(_cardsHabilities[i].GetComponent<RectTransform>()
+                    .DOScale(new Vector3(0, 0, 1), 1));
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                     .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 0.5f));
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>().DOScale(scale, 0.5f));
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>().DOScale(scale, 0.5f));
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                     .DOMove(_buttonsPositionsInScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>EnableBackSelect(true)));
             }
         }
@@ -111,7 +130,8 @@ public class ManagerMecanicsSelector : MonoBehaviour
     private void AnimationChangeHabilities(int i)
     {
         EnableButtons(true);
-        _buttonsHabilities[i].GetComponent<Button>().image.sprite = _imagesHabilitiesButtons[i + (round * 3)];
+        _cardsHabilities[i].GetComponent<Button>().image.sprite = _imagesHabilitiesButtons[ordenAleatorio[i + (round * 3)]];
+        _selected[i] = ordenAleatorio[i + (round * 3)];
     }
 
     private void EnableBackSelect(bool isEnable)
@@ -128,7 +148,7 @@ public class ManagerMecanicsSelector : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            _buttonsHabilities[i].GetComponent<Button>().interactable = isEnable;
+            _cardsHabilities[i].GetComponent<Button>().interactable = isEnable;
         }
     }
 
@@ -146,10 +166,11 @@ public class ManagerMecanicsSelector : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
+                int j = i;
                 Sequence mySequence = DOTween.Sequence();
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
-                    .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>AnimationChangeHabilities(i)));
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
+                    .DOMove(_buttonsPositionsOutScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>AnimationChangeHabilities(j)));
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                     .DOMove(_buttonsPositionsInScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>EnableBackSelect(true)));
             }
         }
@@ -157,9 +178,10 @@ public class ManagerMecanicsSelector : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
+                int j = i;
                 Sequence mySequence = DOTween.Sequence();
-                AnimationChangeHabilities(i);
-                mySequence.Append(_buttonsHabilities[i].GetComponent<RectTransform>()
+                AnimationChangeHabilities(j);
+                mySequence.Append(_cardsHabilities[i].GetComponent<RectTransform>()
                     .DOMove(_buttonsPositionsInScene[i].GetComponent<RectTransform>().position, 2).OnComplete(()=>EnableBackSelect(true)));
             }
         }

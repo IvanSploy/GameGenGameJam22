@@ -305,10 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5191f45930e29c74c86e1ce182b65378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonsHabilities:
+  _cardsHabilities:
   - {fileID: 1052078672}
   - {fileID: 1160531606}
   - {fileID: 1124635720}
@@ -443,6 +443,7 @@ MonoBehaviour:
   - {fileID: 525918729}
   - {fileID: 1360927032}
   - {fileID: 1639330737}
+  _selected: 000000000000000000000000
   _goBackSelector: {fileID: 1391702434}
   _goPlayLevel: {fileID: 827971414}
   _buttonsPositionsOutScene:
@@ -454,26 +455,27 @@ MonoBehaviour:
   - {fileID: 569937850}
   - {fileID: 389370504}
   _imagesHabilitiesSelected:
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
-  - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
+  - {fileID: 21300000, guid: 6c3d095ef12c38a41aa6226c3a9f44aa, type: 3}
+  - {fileID: 21300000, guid: da7743632a7844f4fbd1c9bcaf8b8c6b, type: 3}
+  - {fileID: 21300000, guid: a20e2541873139f4385319d3d807498c, type: 3}
+  - {fileID: 21300000, guid: dc569221c18318a4a8f97260778d83b9, type: 3}
+  - {fileID: 21300000, guid: b316f40b7706b41409c9557d34d8a79d, type: 3}
+  - {fileID: 21300000, guid: fd2c0b9bf741f4a42af891d2db8de12c, type: 3}
+  - {fileID: 21300000, guid: 6a17fcf0984cfd5449401b46d34e55b6, type: 3}
+  - {fileID: 21300000, guid: 313d76b016c32f04384a4d26b5b679cb, type: 3}
+  - {fileID: 21300000, guid: cce1abf57de6b7542af6f98658db2394, type: 3}
   - {fileID: 21300000, guid: 59db8c253892b3740ab532a37ded2ba1, type: 3}
   _imagesHabilitiesButtons:
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
-  - {fileID: 21300000, guid: e6c1496ba5a6c8f4bb1b493bc77c6616, type: 3}
+  - {fileID: 21300000, guid: 6c3d095ef12c38a41aa6226c3a9f44aa, type: 3}
+  - {fileID: 21300000, guid: c5cc0068620084348be4d816918bb71e, type: 3}
+  - {fileID: 21300000, guid: a20e2541873139f4385319d3d807498c, type: 3}
+  - {fileID: 21300000, guid: dc569221c18318a4a8f97260778d83b9, type: 3}
+  - {fileID: 21300000, guid: b316f40b7706b41409c9557d34d8a79d, type: 3}
+  - {fileID: 21300000, guid: fd2c0b9bf741f4a42af891d2db8de12c, type: 3}
+  - {fileID: 21300000, guid: 6a17fcf0984cfd5449401b46d34e55b6, type: 3}
+  - {fileID: 21300000, guid: b03e3f927296f7640ad702c919ea5c4b, type: 3}
+  - {fileID: 21300000, guid: cce1abf57de6b7542af6f98658db2394, type: 3}
+  ordenAleatorio: 
 --- !u!4 &433637916
 Transform:
   m_ObjectHideFlags: 0
