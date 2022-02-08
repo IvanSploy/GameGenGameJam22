@@ -197,11 +197,13 @@ public class ManagerMecanicsSelector : MonoBehaviour
 
     public void GoBackMenu()
     {
+        DOTween.KillAll();
         SceneManager.LoadScene("MainMenu");
     }
 
     public void GoPlayLevel()
     {
+        DOTween.KillAll();
         SceneManager.LoadScene("Level" + PersistanceData.instance.level);
     }
 }
