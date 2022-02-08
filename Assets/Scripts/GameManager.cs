@@ -7,16 +7,14 @@ using Scene = UnityEditor.SearchService.Scene;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameManager instance;
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Awake()
     {
-        
+        if (instance) Destroy(this);
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void BatteryOff()
