@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shield: {fileID: 4836671372197614181}
-  speed: 2
+  speed: 4
   direction: 0
   targetPosition: {x: 0, y: 0}
   obstacles:
@@ -370,6 +370,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010ef40bab3833a459a358617b35e47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPosition: {fileID: 0}
+  myCheckPoint: 0
+  respawns: []
   haveShield: 0
 --- !u!1 &8390120308616561771
 GameObject:

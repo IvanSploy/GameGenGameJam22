@@ -75,7 +75,8 @@ public class ManagerMecanicsSelector : MonoBehaviour
         PersistanceData.instance.habilities[round - 1] = _selected[numberButton];
         if (round == 3)
         {
-            _goPlayLevel.GetComponent<Button>().interactable = true;
+            _goPlayLevel.transform.DOMoveX(_goPlayLevel.transform.position.x - 1500, 2f).OnComplete(() => AnimPlayButton(true));
+            
             for (int i = 0; i < 3; i++)
             {
                 if (i != numberButton)
@@ -127,6 +128,11 @@ public class ManagerMecanicsSelector : MonoBehaviour
         }
     }
 
+    private void AnimPlayButton(bool isEnable)
+    {
+        _goPlayLevel.GetComponent<Button>().interactable = isEnable;
+    }
+
     private void AnimationChangeHabilities(int i)
     {
         EnableButtons(true);
@@ -176,6 +182,8 @@ public class ManagerMecanicsSelector : MonoBehaviour
         }
         else
         {
+            AnimPlayButton(false);
+            _goPlayLevel.transform.DOMoveX(_goPlayLevel.transform.position.x + 1500, 1f);
             for (int i = 0; i < 3; i++)
             {
                 int j = i;
