@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class ChangeLevels : MonoBehaviour
 {
+    public static ChangeLevels instance;
+
     static public int desLevels;
     public int nowLevel; //Cambiar por cada nivel
     [SerializeField] private Button[] levels;
@@ -14,6 +16,8 @@ public class ChangeLevels : MonoBehaviour
 
     private void Awake()
     {
+        if (instance) Destroy(this);
+        instance = this;
         Load();
     }
 
@@ -25,15 +29,16 @@ public class ChangeLevels : MonoBehaviour
         }
     }
     //Call this method when finish condition is true
-    public void changeLevel(int level)
+    public void ChangeLevel(int level)
     {
+
         if (level == 0)
             SceneManager.LoadScene("LevelSelector");
         else 
             SceneManager.LoadScene("PruebaNivel" + level);
     }
 
-    public void DesblockLevel()
+    public void UnlockLevel()
     {
         if (desLevels < nowLevel)
         {
@@ -58,7 +63,7 @@ public class ChangeLevels : MonoBehaviour
     }
     private void BackToMenu()
     {
-        changeLevel(0);
+        ChangeLevel(0);
     }
 
     public void Save()

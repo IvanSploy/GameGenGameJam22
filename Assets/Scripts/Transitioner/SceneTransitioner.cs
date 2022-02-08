@@ -11,9 +11,7 @@ public class SceneTransitioner : MonoBehaviour
     //Referencias
     public TMP_Text title;
     public TMP_Text subtitle;
-    public Image imagen;
     public Image logo;
-    public Image backgroundColor;
     public static SceneTransitioner instance;
     private Animator anim;
 
@@ -32,14 +30,17 @@ public class SceneTransitioner : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    /*private void Start()
+    [ContextMenu("Ir a Selector de Niveles")]
+    public void BackToLevels()
     {
-        StartTransition("Hola chami", 1);
-    }*/
+        OnTransition.AddListener(() => ChangeLevels.instance.ChangeLevel(0));
+        StartTransition(1);
+    }
 
-    public void StartTransition(string text, float delay)
+    public void StartTransition(string text, string subtext, float delay)
     {
         SetTitle(text);
+        SetSubtitle(subtext);
         StartTransition(delay);
     }
 
@@ -55,26 +56,16 @@ public class SceneTransitioner : MonoBehaviour
         StartCoroutine(WaitForTransition(delay));
     }
 
-    public void SetImage(Sprite imagen)
-    {
-        this.imagen.sprite = imagen;
-    }
-    public void SetLogo(Sprite logo)
-    {
-        this.logo.sprite = logo;
-    }
     public void SetTitle(string text)
     {
         title.SetText(text);
     }
+
     public void SetSubtitle(string text)
     {
         subtitle.SetText(text);
     }
-    public void SetBackgroundColor(Color color)
-    {
-        backgroundColor.color = color;
-    }
+
     public void SetTextColor(Color color)
     {
         title.color = color;
@@ -85,7 +76,6 @@ public class SceneTransitioner : MonoBehaviour
     {
         OnTransition.RemoveAllListeners();
         OnEnd.RemoveAllListeners();
-        
     }
 
     private IEnumerator WaitForTransition(float delay)
@@ -97,7 +87,7 @@ public class SceneTransitioner : MonoBehaviour
         EndTransition();
     }
 
-    public void EndTransition()
+    private void EndTransition()
     {
         anim.SetTrigger("ChangeState");
         OnEnd.Invoke();
