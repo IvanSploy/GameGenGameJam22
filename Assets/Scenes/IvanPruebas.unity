@@ -432,6 +432,18 @@ PrefabInstance:
       propertyPath: initialPosition
       value: 
       objectReference: {fileID: 1561987309}
+    - target: {fileID: 8390120307743241248, guid: 62c2a94acdaa74249a7adc7551a9773a, type: 3}
+      propertyPath: habilities.Array.data[0]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390120307743241248, guid: 62c2a94acdaa74249a7adc7551a9773a, type: 3}
+      propertyPath: habilities.Array.data[1]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390120307743241248, guid: 62c2a94acdaa74249a7adc7551a9773a, type: 3}
+      propertyPath: habilities.Array.data[2]
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8390120307743241251, guid: 62c2a94acdaa74249a7adc7551a9773a, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -814,6 +826,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 473569631836464813, guid: 61849da9bead15447bef18e2406cd74b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 473569631875223997, guid: 61849da9bead15447bef18e2406cd74b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 473569631919486398, guid: 61849da9bead15447bef18e2406cd74b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
     - target: {fileID: 473569632183934499, guid: 61849da9bead15447bef18e2406cd74b, type: 3}
       propertyPath: m_Name
       value: HUD
