@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="441ba163-0d38-4b9e-9a28-68c1f5178e4a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GameGenGameJam22/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MecanicsSelector.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MecanicsSelector/ManagerMecanicsSelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/aa.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/aa.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 1.tmx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 1.tmx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 2.tmx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 2.tmx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 3.tmx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 3.tmx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 4.tmx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/nivel 4.tmx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/niveles/tilesetggj.tsx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/niveles/tilesetggj.tsx.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
