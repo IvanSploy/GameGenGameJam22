@@ -32,7 +32,8 @@ public class ChangeLevels : MonoBehaviour
     public void ChangeLevel(int level)
     {
         PersistanceData.instance.level = level;
-        SceneManager.LoadScene("MecanicsSelector");
+        SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("MecanicsSelector"));
+        SceneTransitioner.instance.StartTransition($"Level {nowLevel}", "Go to recharge.", 1);
     }
 
     public void UnlockLevel()
@@ -50,6 +51,7 @@ public class ChangeLevels : MonoBehaviour
     {
         for (int i = 0; i < desLevels + 1; i++)
         {
+            Debug.Log(i);
             levels[i].interactable = true;
         }
     }

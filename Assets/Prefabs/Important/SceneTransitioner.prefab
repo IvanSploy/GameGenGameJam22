@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2545342786001124439}
   - component: {fileID: 2545342786001124437}
   - component: {fileID: 2545342786001124432}
-  - component: {fileID: 7636069844851948173}
+  - component: {fileID: 4815972801972447771}
   m_Layer: 5
   m_Name: SceneTransitioner
   m_TagString: Untagged
@@ -130,7 +130,7 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7636069844851948173
+--- !u!114 &4815972801972447771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowLevel: 0
-  levels: []
+  levels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2545342786778701614
 GameObject:
   m_ObjectHideFlags: 0
