@@ -72,5 +72,6 @@ public class PopUpBehaviour : MonoBehaviour
         TriggerPopUp();
         ChangeLevels.instance.UnlockLevel();
         ChangeLevels.instance.ChangeLevel(PersistanceData.instance.level + 1);
+        nextLevelButton.interactable = false;
     }
 }
