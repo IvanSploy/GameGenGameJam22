@@ -4,7 +4,6 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Animations;
 
 public class Battery : MonoBehaviour
 {
@@ -12,14 +11,15 @@ public class Battery : MonoBehaviour
     private Slider slider;
     private int sleepTime;
     private int maxSeconds;
+    private PlayerController _playerController;
     private bool isSelected = false;
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimatorController moreTime;
     private TextMeshProUGUI TMP;
     [SerializeField] private Image _image;
     void Start()
     {
         maxSeconds = (int) seconds;
+        _image.enabled = false;
         TMP = GetComponent<TextMeshProUGUI>();
         //slider = this.GetComponent<Slider>();
         //En Unity configurar el MaxValue (tiempo de juego :D)
@@ -27,6 +27,7 @@ public class Battery : MonoBehaviour
         //slider.value = seconds;
         sleepTime = FindObjectOfType<CinematicLevel>().timeCinematic;
         StartCoroutine(BeforeStart());
+        
     }
 
     // Update is called once per frame
@@ -39,7 +40,15 @@ public class Battery : MonoBehaviour
         yield return new WaitForSeconds(sleepTime);
         StartCoroutine(DecrementTime());
         if (isSelected)
+        {
             PassiveMoreTime();
+            animator.SetTrigger("BigBattery");
+        }
+        else
+        {
+            animator.SetTrigger("SmallBattery");
+        }
+        _image.enabled = true;
     }
 
     IEnumerator DecrementTime()
@@ -63,12 +72,11 @@ public class Battery : MonoBehaviour
     public void SelectPassive()
     {
         isSelected = true;
+        maxSeconds = (int) seconds;
     }
     
     private void PassiveMoreTime()
     {
         seconds += 20;
-        animator.runtimeAnimatorController = moreTime;
-        animator.Play("MoreBattery");
     }
 }

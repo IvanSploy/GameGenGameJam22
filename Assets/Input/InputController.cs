@@ -49,6 +49,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""63cf08a8-0843-4709-b6f6-57b8b1d21175"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -183,6 +191,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""LeftHability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1579106-ff86-475e-b2ed-b0739e21b903"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -195,6 +214,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player_Habilities = m_Player.FindAction("Habilities", throwIfNotFound: true);
         m_Player_RightHability = m_Player.FindAction("RightHability", throwIfNotFound: true);
         m_Player_LeftHability = m_Player.FindAction("LeftHability", throwIfNotFound: true);
+        m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -248,6 +268,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Habilities;
     private readonly InputAction m_Player_RightHability;
     private readonly InputAction m_Player_LeftHability;
+    private readonly InputAction m_Player_Escape;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -256,6 +277,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @Habilities => m_Wrapper.m_Player_Habilities;
         public InputAction @RightHability => m_Wrapper.m_Player_RightHability;
         public InputAction @LeftHability => m_Wrapper.m_Player_LeftHability;
+        public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -277,6 +299,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @LeftHability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
                 @LeftHability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
                 @LeftHability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftHability;
+                @Escape.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -293,6 +318,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @LeftHability.started += instance.OnLeftHability;
                 @LeftHability.performed += instance.OnLeftHability;
                 @LeftHability.canceled += instance.OnLeftHability;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
             }
         }
     }
@@ -303,5 +331,6 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnHabilities(InputAction.CallbackContext context);
         void OnRightHability(InputAction.CallbackContext context);
         void OnLeftHability(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

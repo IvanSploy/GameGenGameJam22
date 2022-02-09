@@ -8,12 +8,11 @@ public class PopUpBehaviour : MonoBehaviour
 {
     //Referencias
     public static PopUpBehaviour instance;
-    public Button nextLevelButton; 
+    public Button nextLevelButton;
     public TMP_Text info;
     private Animator anim;
     public bool pauseOnTrigger = false;
-    [HideInInspector]
-    public bool paused = false;
+    [HideInInspector] public bool paused = false;
 
     void Awake()
     {
@@ -50,14 +49,15 @@ public class PopUpBehaviour : MonoBehaviour
                 paused = true;
             }
         }
+
         anim.SetTrigger("ChangeState");
     }
 
     public void GoToMainMenu()
     {
         TriggerPopUp();
-        SceneTransitioner.instance.OnTransition.AddListener(()=>ChangeLevels.instance.BackToMainMenu());
-        SceneTransitioner.instance.StartTransition("Loading...","", 1);
+        SceneTransitioner.instance.OnTransition.AddListener(() => ChangeLevels.instance.BackToMainMenu());
+        SceneTransitioner.instance.StartTransition("Loading...", "", 1);
     }
 
     public void GoToMecanics()
@@ -70,7 +70,7 @@ public class PopUpBehaviour : MonoBehaviour
     public void GoToNextLevel()
     {
         TriggerPopUp();
-        ChangeLevels.instance.nowLevel++;
-        ChangeLevels.instance.ChangeLevel(ChangeLevels.instance.nowLevel);
+        ChangeLevels.instance.UnlockLevel();
+        ChangeLevels.instance.ChangeLevel(PersistanceData.instance.level + 1);
     }
 }

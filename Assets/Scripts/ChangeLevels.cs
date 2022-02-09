@@ -32,8 +32,9 @@ public class ChangeLevels : MonoBehaviour
     public void ChangeLevel(int level)
     {
         PersistanceData.instance.level = level;
+        nowLevel = level;
         SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("MecanicsSelector"));
-        SceneTransitioner.instance.StartTransition($"Level {nowLevel}", "Go to recharge.", 1);
+        SceneTransitioner.instance.StartTransition($"Level {level}", "Go to recharge.", 1);
     }
 
     public void UnlockLevel()
@@ -41,10 +42,8 @@ public class ChangeLevels : MonoBehaviour
         if (desLevels < nowLevel)
         {
             desLevels = nowLevel;
-            nowLevel++;
         }
         Save();
-        BackToMenu();
     }
 
     private void UpdateBlocks()
@@ -78,6 +77,7 @@ public class ChangeLevels : MonoBehaviour
 
     public void Load()
     {
+        nowLevel = 1;
         desLevels = PlayerPrefs.GetInt(levelsPrefsName, 1);
     }
 }

@@ -102,7 +102,11 @@ public class MenuManager : MonoBehaviour
             .Join(mainMenuText.transform.DOMoveY(mainMenuText.transform.position.y - 1000, 0.5f))
             .OnComplete(() => EnableButtonsMenu(true));
     }
-    
+
+    public void quit()
+    {
+        Application.Quit();
+    }
     private void EnableButtonsMenu(bool isEnable)
     {
         mainMenuCredits.GetComponent<Button>().interactable = isEnable;

@@ -846,6 +846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battery
       objectReference: {fileID: 0}
+    - target: {fileID: 6958640658549178283, guid: bfe086da28a2abc4c8af1d5363fe8c66, type: 3}
+      propertyPath: seconds
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfe086da28a2abc4c8af1d5363fe8c66, type: 3}
 --- !u!4 &7350010782471895140 stripped

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -81,6 +82,8 @@ public class PlayerController : MonoBehaviour
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.LeftHability.started += (ctx) => OnNextHability(true);
         input.Player.RightHability.started += (ctx) => OnNextHability(false);
+        input.Player.Escape.performed += (ctx) => onEscape();
+
         DOTween.Init();
 
         //Obtener habilidades
@@ -384,6 +387,11 @@ public class PlayerController : MonoBehaviour
         {
             totalCooldowns[i] /= div;
         }
+    }
+
+    public void onEscape()
+    {
+        ChangeLevels.instance.BackToMainMenu();
     }
 
     //5s mientras este seleccionado
