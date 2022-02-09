@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    private static GameManager instance;
 
     // Start is called before the first frame update
     void Awake()
@@ -17,37 +17,46 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void BatteryOff()
+    public static void BatteryOff()
     {
         Debug.Log("Game Over");
-        PopUpBehaviour.instance.TriggerPopUp("Game Over", Color.red, false);
+        FindPopUp("EndPopUp").TriggerPopUp("Game Over", Color.red, false);
     }
 
-    public void FinishLevel()
+    public static void FinishLevel()
     {
         Debug.Log("Nivel completado");
         ChangeLevels.instance.UnlockLevel(PersistanceData.level+1);
-        PopUpBehaviour.instance.TriggerPopUp("Victory", Color.yellow, true);
+        FindPopUp("EndPopUp").TriggerPopUp("Victory", Color.yellow, true);
     }
 
-    public void Play()
+    public static PopUpBehaviour FindPopUp(string tag)
+    {
+        PopUpBehaviour[] popUps = FindObjectsOfType<PopUpBehaviour>();
+        foreach(PopUpBehaviour p in popUps)
+        {
+            if (p.tag.Equals(tag)) return p;
+        }
+        return null;
+    }
+
+    public static void Play()
     {
         SceneManager.LoadScene("LevelSelector");
     }
 
-    public void Credits()
+    public static void Credits()
     {
         SceneManager.LoadScene("Credits");
     }
 
-    public void Back()
+    public static void Back()
     {
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void Exit()
+    public static void Exit()
     {
-        Debug.Log("Exit");
         Application.Quit();
     }
 

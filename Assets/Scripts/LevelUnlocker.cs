@@ -12,7 +12,10 @@ public class LevelUnlocker : MonoBehaviour
         for (int i = 0; i < levels.Length; i++)
         {
             int j = i;
-            levels[i].onClick.AddListener(()=> ChangeLevel(j+1));
+            levels[i].onClick.AddListener(() => 
+            {
+                ChangeLevel(j + 1);
+            });
         }
         UpdateBlocks();
     }

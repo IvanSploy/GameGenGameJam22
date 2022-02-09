@@ -26,7 +26,7 @@ public class PlayerEvents : MonoBehaviour
         //Destroy(gameObject);
         if (haveShield == false)
         {
-            MovePlayer();
+            OnDie(true);
         }
         else
         {
@@ -34,6 +34,12 @@ public class PlayerEvents : MonoBehaviour
             _player._shield.enabled = false;
             _player.SetCooldown(_player.HabilityIndex);
         }
+    }
+
+    public void OnDie(bool instaKill)
+    {
+        if (!instaKill) _player.markToDie = true;
+        else KillPlayer();
     }
 
     private void InitialPosition()
@@ -46,7 +52,7 @@ public class PlayerEvents : MonoBehaviour
         }
     }
 
-    public void MovePlayer()
+    public void KillPlayer()
     {
         if (_player.isDashing)
         {

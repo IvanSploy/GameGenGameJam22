@@ -7,23 +7,22 @@ using UnityEngine.UI;
 public class PopUpBehaviour : MonoBehaviour
 {
     //Referencias
-    public static PopUpBehaviour instance;
+    public static int numActive = 0;
+    public bool isActive = false;
     private Button[] buttons;
     public Button nextLevelButton;
     public TMP_Text info;
     private Animator anim;
     public bool pauseOnTrigger = false;
-    [HideInInspector] public bool paused = false;
 
     void Awake()
     {
-        if (instance) Destroy(gameObject);
-        instance = this;
         buttons = FindObjectsOfType<Button>();
     }
 
     void Start()
     {
+        numActive = 0;
         anim = GetComponent<Animator>();
     }
 
@@ -39,26 +38,28 @@ public class PopUpBehaviour : MonoBehaviour
     {
         if (pauseOnTrigger)
         {
-            if (paused)
+            if (isActive)
             {
                 ActiveButtons(false);
                 Time.timeScale = 1;
-                paused = false;
+                isActive = false;
+                numActive--;
             }
             else
             {
                 ActiveButtons(true);
                 Time.timeScale = 0;
-                paused = true;
+                isActive = true;
+                numActive++;
             }
         }
-        nextLevelButton.interactable = passed;
+        if(nextLevelButton) nextLevelButton.interactable = passed;
         anim.SetTrigger("ChangeState");
     }
 
     public void TriggerPopUp()
     {
-        TriggerPopUp(!paused);
+        TriggerPopUp(!isActive);
     }
 
         public void GoToMainMenu()

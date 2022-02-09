@@ -60,7 +60,7 @@ public class Battery : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (seconds <= 0)
         {
-            FindObjectOfType<GameManager>().BatteryOff();
+            GameManager.BatteryOff();
         }
         else
         {

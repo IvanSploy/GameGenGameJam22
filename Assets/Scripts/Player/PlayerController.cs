@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector2 targetPosition;
     public LayerMask obstacles;
+    public bool markToDie = false;
 
     //Habilites
     public int[] habilities = {0, 1, 2};
@@ -82,9 +83,11 @@ public class PlayerController : MonoBehaviour
         input.Player.Habilities.started += (ctx) => ManageHabilities();
         input.Player.LeftHability.started += (ctx) => OnNextHability(true);
         input.Player.RightHability.started += (ctx) => OnNextHability(false);
-        input.Player.Escape.performed += (ctx) => onEscape();
+        input.Player.Escape.started += (ctx) => OnEscape();
 
         DOTween.Init();
+
+        SetLight(false);
 
         //Obtener habilidades
         habilities = PersistanceData.habilities;
@@ -115,63 +118,73 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("speed", speed + 1);
         }
 
-        if (dir != Vector2.zero && (Vector2) transform.position == targetPosition)
+        if ((Vector2) transform.position == targetPosition)
         {
-            Direction prevDir = direction;
-            if (dir.x > 0)
+            //Esperar a llegar al centro para morir.
+            if (markToDie)
             {
-                direction = Direction.right;
-                if (CanMove)
-                {
-                    if (!prevDir.Equals(direction))
-                    {
-                        anim.SetFloat("speed", 0);
-                        anim.SetTrigger("right");
-                    }
-
-                    targetPosition += Vector2.right;
-                }
+                markToDie = false;
+                GetComponent<PlayerEvents>().KillPlayer();
+                return;
             }
-            else if (dir.x < 0)
+            else if (dir != Vector2.zero)
             {
-                direction = Direction.left;
-                if (CanMove)
+                Direction prevDir = direction;
+                if (dir.x > 0)
                 {
-                    if (!prevDir.Equals(direction))
+                    direction = Direction.right;
+                    if (CanMove)
                     {
-                        anim.SetFloat("speed", 0);
-                        anim.SetTrigger("left");
-                    }
+                        if (!prevDir.Equals(direction))
+                        {
+                            anim.SetFloat("speed", 0);
+                            anim.SetTrigger("right");
+                        }
 
-                    targetPosition += Vector2.left;
+                        targetPosition += Vector2.right;
+                    }
                 }
-            }
-            else if (dir.y > 0)
-            {
-                direction = Direction.up;
-                if (CanMove)
+                else if (dir.x < 0)
                 {
-                    if (!prevDir.Equals(direction))
+                    direction = Direction.left;
+                    if (CanMove)
                     {
-                        anim.SetFloat("speed", 0);
-                        anim.SetTrigger("up");
-                    }
+                        if (!prevDir.Equals(direction))
+                        {
+                            anim.SetFloat("speed", 0);
+                            anim.SetTrigger("left");
+                        }
 
-                    targetPosition += Vector2.up;
+                        targetPosition += Vector2.left;
+                    }
                 }
-            }
-            else
-            {
-                direction = Direction.down;
-                if (CanMove)
+                else if (dir.y > 0)
                 {
-                    if (!prevDir.Equals(direction))
+                    direction = Direction.up;
+                    if (CanMove)
                     {
-                        anim.SetFloat("speed", 0);
-                        anim.SetTrigger("down");
-                    }
+                        if (!prevDir.Equals(direction))
+                        {
+                            anim.SetFloat("speed", 0);
+                            anim.SetTrigger("up");
+                        }
 
-                    targetPosition += Vector2.down;
+                        targetPosition += Vector2.up;
+                    }
+                }
+                else
+                {
+                    direction = Direction.down;
+                    if (CanMove)
+                    {
+                        if (!prevDir.Equals(direction))
+                        {
+                            anim.SetFloat("speed", 0);
+                            anim.SetTrigger("down");
+                        }
+
+                        targetPosition += Vector2.down;
+                    }
                 }
             }
         }
@@ -214,6 +227,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DoTeleport()
     {
+        GetComponent<Collider2D>().enabled = false;
         playerCanControl = false;
         anim.SetTrigger("teleport");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
@@ -272,6 +286,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         SetCooldown(performedHabilityIndex);
         playerCanControl = true;
+        GetComponent<Collider2D>().enabled = true;
     }
 
     private void Dash()
@@ -389,9 +404,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void onEscape()
+    public void OnEscape()
     {
-        ChangeLevels.instance.BackToMainMenu();
+        PopUpBehaviour popUp = GameManager.FindPopUp("PausePopUp");
+        if (PopUpBehaviour.numActive==0 || popUp.isActive) popUp.TriggerPopUp();
     }
 
     //5s mientras este seleccionado
@@ -409,17 +425,20 @@ public class PlayerController : MonoBehaviour
         {
             switch (habilities[i])
             {
+                case 1:
+                    GetComponent<Weapon>().Init(i);
+                    break;
                 case 6:
                     FindObjectOfType<Battery>().SelectPassive();
-                    if (i == 1) { OnNextHability(true); }
+                    if (i == HabilityIndex) { OnNextHability(true); }
                     break;
                 case 7:
                     MoreSpeed(2);
-                    if (i == 1) { OnNextHability(true); }
+                    if (i == HabilityIndex) { OnNextHability(true); }
                     break;
                 case 8:
                     LessCountdown(2);
-                    if (i == 1) { OnNextHability(true); }
+                    if (i == HabilityIndex) { OnNextHability(true); }
                     break;
                 default:
                     break;
@@ -438,7 +457,6 @@ public class PlayerController : MonoBehaviour
                 SetLight(true);
                 break;
             default:
-                SetLight(false);
                 break;
         }
         UpdateImageHabilities();
@@ -486,6 +504,8 @@ public class PlayerController : MonoBehaviour
             case 5:
                 SetLight(false);
                 break;
+            default:
+                break;
         }
         if (left)
         {
@@ -496,11 +516,7 @@ public class PlayerController : MonoBehaviour
             HabilityIndex--;
         }
         UpdateImageHabilities();
-        //Para evitar recursión infinita. Si todas son pasivas.
-        if (HabilityIndex == initialHability) return;
 
-        //Aquí se indican las habilidades pasivas.
-        //También se activan las activas automáticas.
         switch (habilities[HabilityIndex])
         {
             case 4:
@@ -509,6 +525,17 @@ public class PlayerController : MonoBehaviour
             case 5:
                 SetLight(true);
                 break;
+            default:
+                break;
+        }
+
+        //Para evitar recursión infinita. Si todas son pasivas.
+        if (HabilityIndex == initialHability) return;
+
+        //Aquí se indican las habilidades pasivas.
+        //También se activan las activas automáticas.
+        switch (habilities[HabilityIndex])
+        {
             case 6:
             case 7:
             case 8:

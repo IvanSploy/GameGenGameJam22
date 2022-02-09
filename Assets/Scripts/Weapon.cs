@@ -12,26 +12,18 @@ public class Weapon : MonoBehaviour
     private bool canShoot;
     private GameObject _bullet;
 
-    private int mySlot = -1;
+    public int mySlot = -1;
 
     private void Awake()
     {
         canShoot = true;
+        player = GetComponent<PlayerController>();
     }
 
-    void Start()
+    public void Init(int slot)
     {
-        player = GetComponent<PlayerController>();
         player.totalCooldowns[1] = fireRate;
-        bool encontrado = false;
-        for (int i = 0; i < player.habilities.Length && !encontrado; i++)
-        {
-            if(player.habilities[i] == 1)
-            {
-                encontrado = true;
-                mySlot = i;
-            }
-        }
+        mySlot = slot;
     }
 
     void Update()

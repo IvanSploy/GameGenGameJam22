@@ -11,8 +11,7 @@ public class Lave : MonoBehaviour
         {
             if (!other.GetComponent<PlayerController>().isDashing)
             {
-                FindObjectOfType<PlayerEvents>().MovePlayer();
-                Debug.Log("Has muerto");
+                FindObjectOfType<PlayerEvents>().OnDie(false);
             }
         }
     }
