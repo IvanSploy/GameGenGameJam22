@@ -13,7 +13,7 @@ public class SceneTransitioner : MonoBehaviour
     public TMP_Text subtitle;
     public Image logo;
     public static SceneTransitioner instance;
-    private Animator anim;
+    public Animator anim;
 
     //Eventos
     public AnimationClip[] delayClips;
@@ -22,12 +22,20 @@ public class SceneTransitioner : MonoBehaviour
 
     private void Awake()
     {
-        if (instance)
+        if (instance && instance != this)
+        {
             Destroy(gameObject);
+            return;
+        }
         instance = this;
         DontDestroyOnLoad(gameObject);
-
         anim = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        OnTransition.AddListener(() => ChangeLevels.instance.BackToMainMenu());
+        StartTransition("Boot loading...", "Please wait.", 1);
     }
 
     [ContextMenu("Ir a Selector de Niveles")]

@@ -122,6 +122,7 @@ MonoBehaviour:
   title: {fileID: 2545342786778701608}
   subtitle: {fileID: 6067303985916332337}
   logo: {fileID: 2545342787265760936}
+  anim: {fileID: 0}
   delayClips:
   - {fileID: 7400000, guid: 974b9b736357a43448def0b1f3325783, type: 2}
   OnTransition:
@@ -142,18 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52a2bc75c259ca49975b7c200ca764f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nowLevel: 0
-  levels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &2545342786778701614
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,9 +238,9 @@ MonoBehaviour:
   m_fontSize: 150
   m_fontSizeBase: 150
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 150
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -282,7 +271,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -863.4851, y: -83.66705, z: -859.001, w: -68.454895}
+  m_margin: {x: -741.68896, y: -100.58801, z: -741.689, w: -68.454895}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -572,7 +561,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 3707764735
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3

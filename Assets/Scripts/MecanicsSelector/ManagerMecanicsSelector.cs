@@ -71,7 +71,7 @@ public class ManagerMecanicsSelector : MonoBehaviour
         EnableBackSelect(false);
         EnableButtons(false);
         _habilitiesSelected[round - 1].sprite = _imagesHabilitiesSelected[ordenAleatorio[numberButton + ((round - 1) * 3)]];
-        PersistanceData.instance.habilities[round - 1] = _selected[numberButton];
+        PersistanceData.habilities[round - 1] = _selected[numberButton];
         if (round == 3)
         {
             _goPlayLevel.transform.DOMoveX(_goPlayLevel.transform.position.x - 1500, 2f).OnComplete(() => AnimPlayButton(true));
@@ -197,12 +197,14 @@ public class ManagerMecanicsSelector : MonoBehaviour
     public void GoBackMenu()
     {
         DOTween.KillAll();
-        SceneManager.LoadScene("MainMenu");
+        SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("MainMenu"));
+        SceneTransitioner.instance.StartTransition("Aborting simulation!", "Going back to menu.", 0.5f);
     }
 
     public void GoPlayLevel()
     {
         DOTween.KillAll();
-        SceneManager.LoadScene("Level" + PersistanceData.instance.level);
+        SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("Level" + PersistanceData.level));
+        SceneTransitioner.instance.StartTransition("Loading...", "", 0.5f);
     }
 }

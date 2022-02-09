@@ -802,6 +802,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42fb468cb2116c489cc37bd6724e7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 287323594256134676}
+  - {fileID: 3217796944980226454}
+  - {fileID: 0}
   nextLevelButton: {fileID: 5733778460238850657}
   info: {fileID: 5858583690430995578}
   pauseOnTrigger: 1

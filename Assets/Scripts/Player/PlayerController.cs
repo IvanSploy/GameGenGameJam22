@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         DOTween.Init();
 
         //Obtener habilidades
-        if (PersistanceData.instance) habilities = PersistanceData.instance.habilities;
+        habilities = PersistanceData.habilities;
         //Activar pasivas.
         CheckPasives();
         //Activar habilidad automatica.
@@ -411,12 +411,15 @@ public class PlayerController : MonoBehaviour
             {
                 case 6:
                     FindObjectOfType<Battery>().SelectPassive();
+                    if (i == 1) { OnNextHability(true); }
                     break;
                 case 7:
                     MoreSpeed(2);
+                    if (i == 1) { OnNextHability(true); }
                     break;
                 case 8:
                     LessCountdown(2);
+                    if (i == 1) { OnNextHability(true); }
                     break;
                 default:
                     break;

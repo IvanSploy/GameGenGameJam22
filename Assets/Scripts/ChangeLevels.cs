@@ -10,9 +10,7 @@ public class ChangeLevels : MonoBehaviour
     public static ChangeLevels instance;
 
     static public int desLevels;
-    public int nowLevel; //Cambiar por cada nivel
-    [SerializeField] private Button[] levels;
-    private String levelsPrefsName = "Levels";
+    private string levelsPrefsName = "Levels";
 
     private void Awake()
     {
@@ -21,38 +19,21 @@ public class ChangeLevels : MonoBehaviour
         Load();
     }
 
-    void Start()
-    {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            UpdateBlocks();
-        }
-    }
     //Call this method when finish condition is true
     public void ChangeLevel(int level)
     {
-        PersistanceData.instance.level = level;
-        nowLevel = level;
+        PersistanceData.level = level;
         SceneTransitioner.instance.OnTransition.AddListener(() => SceneManager.LoadScene("MecanicsSelector"));
         SceneTransitioner.instance.StartTransition($"Level {level}", "Go to recharge.", 1);
     }
 
-    public void UnlockLevel()
+    public void UnlockLevel(int level)
     {
-        if (desLevels < nowLevel)
+        if (desLevels < level)
         {
-            desLevels = nowLevel;
+            desLevels = level;
         }
         Save();
-    }
-
-    private void UpdateBlocks()
-    {
-        for (int i = 0; i < desLevels + 1; i++)
-        {
-            Debug.Log(i);
-            levels[i].interactable = true;
-        }
     }
 
     public void BackToMainMenu()
@@ -77,7 +58,6 @@ public class ChangeLevels : MonoBehaviour
 
     public void Load()
     {
-        nowLevel = 1;
         desLevels = PlayerPrefs.GetInt(levelsPrefsName, 1);
     }
 }

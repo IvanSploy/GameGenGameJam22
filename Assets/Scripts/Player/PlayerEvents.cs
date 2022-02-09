@@ -27,11 +27,9 @@ public class PlayerEvents : MonoBehaviour
         if (haveShield == false)
         {
             MovePlayer();
-            Debug.Log("Morí");
         }
         else
         {
-            Debug.Log("Rompe escudo");
             haveShield = false;
             _player._shield.enabled = false;
             _player.SetCooldown(_player.HabilityIndex);
@@ -60,6 +58,8 @@ public class PlayerEvents : MonoBehaviour
 
     IEnumerator DoMovePlayer()
     {
+        _player.direction = PlayerController.Direction.down;
+        _player.anim.SetTrigger("down");
         _player.GetComponent<Collider2D>().enabled = false;
         _player.playerCanControl = false;
         _player.anim.SetTrigger("teleport");

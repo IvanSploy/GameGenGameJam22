@@ -8,6 +8,7 @@ public class PopUpBehaviour : MonoBehaviour
 {
     //Referencias
     public static PopUpBehaviour instance;
+    private Button[] buttons;
     public Button nextLevelButton;
     public TMP_Text info;
     private Animator anim;
@@ -18,6 +19,7 @@ public class PopUpBehaviour : MonoBehaviour
     {
         if (instance) Destroy(gameObject);
         instance = this;
+        buttons = FindObjectsOfType<Button>();
     }
 
     void Start()
@@ -27,37 +29,44 @@ public class PopUpBehaviour : MonoBehaviour
 
     public void TriggerPopUp(string text, Color color, bool passed)
     {
-        nextLevelButton.interactable = passed;
         info.SetText(text);
         info.color = color;
-        TriggerPopUp();
+        TriggerPopUp(passed);
     }
 
     [ContextMenu("Trigger")]
-    public void TriggerPopUp()
+    public void TriggerPopUp(bool passed)
     {
         if (pauseOnTrigger)
         {
             if (paused)
             {
+                ActiveButtons(false);
                 Time.timeScale = 1;
                 paused = false;
             }
             else
             {
+                ActiveButtons(true);
                 Time.timeScale = 0;
                 paused = true;
             }
         }
-
+        nextLevelButton.interactable = passed;
         anim.SetTrigger("ChangeState");
     }
 
-    public void GoToMainMenu()
+    public void TriggerPopUp()
+    {
+        TriggerPopUp(!paused);
+    }
+
+        public void GoToMainMenu()
     {
         TriggerPopUp();
         SceneTransitioner.instance.OnTransition.AddListener(() => ChangeLevels.instance.BackToMainMenu());
         SceneTransitioner.instance.StartTransition("Loading...", "", 1);
+        
     }
 
     public void GoToMecanics()
@@ -70,8 +79,14 @@ public class PopUpBehaviour : MonoBehaviour
     public void GoToNextLevel()
     {
         TriggerPopUp();
-        ChangeLevels.instance.UnlockLevel();
-        ChangeLevels.instance.ChangeLevel(PersistanceData.instance.level + 1);
-        nextLevelButton.interactable = false;
+        ChangeLevels.instance.ChangeLevel(PersistanceData.level + 1);
+    }
+
+    public void ActiveButtons(bool active)
+    {
+        foreach(Button b in buttons)
+        {
+            b.interactable = active;
+        }
     }
 }

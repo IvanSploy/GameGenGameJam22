@@ -16,7 +16,7 @@ public class PruebaLevel : MonoBehaviour
         UpdateText();
         if (puntos == 10)
         {
-            changeScenes.GetComponent<ChangeLevels>().UnlockLevel();
+            changeScenes.GetComponent<ChangeLevels>().UnlockLevel(PersistanceData.level+1);
         }
     }
     private void UpdateText()

@@ -16,6 +16,7 @@ public class Keys : MonoBehaviour
     {
         transform.position = GameManager.CenterVector(transform.position);
         player = FindObjectOfType<PlayerController>();
+        keysTaken = 0;
     }
 
     private void Update()
@@ -30,11 +31,9 @@ public class Keys : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Entro Trigger");
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Holiii");
-            FindObjectOfType<LevelManager>().decKeys();
+            FindObjectOfType<LevelManager>().DecKeys();
             taken = true;
             keysTaken++;
             takenPos = keysTaken;

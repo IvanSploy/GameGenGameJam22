@@ -8,20 +8,25 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance) Destroy(this);
+        if (instance && instance!=this)
+        {
+            Destroy(this);
+            return;
+        }
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     public void BatteryOff()
     {
-        Debug.Log("Finish");
+        Debug.Log("Game Over");
         PopUpBehaviour.instance.TriggerPopUp("Game Over", Color.red, false);
     }
 
     public void FinishLevel()
     {
         Debug.Log("Nivel completado");
+        ChangeLevels.instance.UnlockLevel(PersistanceData.level+1);
         PopUpBehaviour.instance.TriggerPopUp("Victory", Color.yellow, true);
     }
 
