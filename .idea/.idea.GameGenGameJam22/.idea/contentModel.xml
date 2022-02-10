@@ -46,6 +46,7 @@
           <e p="Keys.cs" t="Include" />
           <e p="Lave.cs" t="Include" />
           <e p="LevelManager.cs" t="Include" />
+          <e p="LevelUnlocker.cs" t="Include" />
           <e p="MecanicsSelector" t="Include">
             <e p="ManagerMecanicsSelector.cs" t="Include" />
             <e p="PersistanceData.cs" t="Include" />
