@@ -685,6 +685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: nivel_6
       objectReference: {fileID: 0}
+    - target: {fileID: 8603785288038783246, guid: 483feef917ef2bc43a62a0ab59d017c5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8728983328522338150, guid: 483feef917ef2bc43a62a0ab59d017c5, type: 3}
       propertyPath: m_IsTrigger
       value: 1

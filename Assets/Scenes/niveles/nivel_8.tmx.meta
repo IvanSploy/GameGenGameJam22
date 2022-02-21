@@ -9,9 +9,11 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors:
-  - 'Missing tileset asset: ../../../github/GameGenGameJam22/Assets/Scenes/niveles/tilesetggj.tsx'
-  warnings: []
+  errors: []
+  warnings:
+  - Pixels Per Unit mismatch between map (100) and tileset 'tilesetggj.tsx' (32)
+  - Pixels Per Unit mismatch between map (100) and tileset '../niveles/tilesetggj.tsx'
+    (32)
   missingSortingLayers: []
   missingLayers: []
   missingTags: []
